@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:57:14 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/21 16:50:05 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:08:21 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,11 @@
 
 //cd_builtin.c
 int	cd_builtin(char *path);
+
+//echo builtin
+int	echo_builtin(char **strings);
+
+//pwd builitn
+int	pwd_builtin(void);
 
 #endif
