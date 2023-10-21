@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 14:57:14 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/21 17:37:59 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/21 18:05:31 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,8 @@
 # include <stdio.h>
 # include <limits.h>
 # include <unistd.h>
+
+// pwd.c
+int	pwd_builtin(void)
 
 #endif
