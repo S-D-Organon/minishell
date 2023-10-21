@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:16:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/21 16:48:56 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/21 17:32:01 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,14 @@
 
 int	cd_builtin(char *path)
 {
-	if (path == NULL)
+	if (path[0] == '\0')
 	{
-		path = getenv("Users");
+		path = getenv("HOME");
 		if (path == NULL)
-		{
-			perror("cd");
-			return (1);
-		}
+			return (-1);
 	}
 	if (chdir(path) != 0)
-	{
-		perror ("cd");
-		return (1);
-	}
+		return (-1);
 	return (0);
 }
 /*
@@ -91,6 +85,7 @@ int	main(int argc, char *argv[])
 			path = ft_strjoin(path, argv[2]);
 			printf("Répertoire voulu : %s\n", path);
 			status = cd_builtin(path);
+			free(path);
 			if (status != 0)
 			{
 				return (1);
