@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin.h                                          :+:      :+:    :+:   */
+/*   pwd_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 14:57:14 by gdornic           #+#    #+#             */
-/*   Updated: 2023/10/21 16:59:56 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/10/21 16:56:20 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/10/21 17:02:09 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BUILTIN_H
-# define BUILTIN_H
+#include "builtin.h"
 
-# include <stdio.h>
-# include <limits.h>
+int	pwd_builtin(void)
+{
+	char	pwd[PATH_MAX];
 
-#endif
+	getcwd(pwd, PATH_MAX);
+}
