@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 10:18:04 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/24 10:22:31 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/24 10:34:00 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,6 @@ int		echo_builtin(char **strings);
 void	env_builtin(void);
 
 //pwd builtin
-int	pwd_builtin(void);
+int		pwd_builtin(void);
 
 #endif
