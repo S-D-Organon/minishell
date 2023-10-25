@@ -6,10 +6,13 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 15:56:59 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/25 15:57:43 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/25 16:36:26 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <builtin.h>
+#include "builtin.h"
 
-
+int	exit_builtin(char **args)
+{
+	exit(0);
+}
