@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 15:06:04 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/23 16:10:49 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/10/25 15:57:27 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	env_builtin(void)
 		i++;
 	}
 }
-
+/*
 int	main(int ac, char **ag, char **env)
 {
 	char	*tut;
@@ -79,3 +79,4 @@ int	main(int ac, char **ag, char **env)
 	execve(ft_strjoin("/bin/", ag[1]), ag + 1, env);
 	//env_builtin();
 }
+*/
