@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 10:58:08 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/19 12:06:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/19 15:47:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ unsigned int	word_count(char *str, int (*context)(char c))
 		if ((*context)(*str))
 		{
 			count++;
+			str++;
 			str += word_size(str, context);
 		}
 		else
@@ -63,16 +64,17 @@ char	**split_context(char *str, int (*context)(char c))
 	{
 		if ((*context)(*str))
 		{
-			size = word_size(str, context);
+			str++;
+			size = 1 + word_size(str, context);
 			split[i] = (char *)malloc(sizeof(char) * (size + 1));
 			if (split[i] == NULL)
 			{
 				array_free(split, 2);
 				return (NULL);
 			}
-			memcpy(split[i], str, (size_t)size);
+			memcpy(split[i], str - 1, (size_t)size);
 			split[i][size] = '\0';
-			str += size;
+			str += size - 1;
 			i++;
 		}
 		else

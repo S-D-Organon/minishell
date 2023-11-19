@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/19 11:47:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/19 15:02:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@
 # include <termios.h>
 # define PROMPT "minishell> "
 
-//
+//is token
+int	is_token(char c);
 
-//tokenizer
+//split context
+char	**split_context(char *str, int (*context)(char c));
+
+//array free
+void	array_free(void *root, unsigned int dimension);
 
 #endif

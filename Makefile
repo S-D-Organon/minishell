@@ -6,7 +6,7 @@
 #    By: gdornic <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/10/20 11:44:20 by gdornic          ###   ########.fr        #
+#    Updated: 2023/11/19 15:03:26 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS =
 
 LIB_LINK = -L/usr/include -lreadline
 
-SRC = main.c
+SRC = main.c is_token.c split_context.c array_free.c
 
 OBJ = $(SRC:.c=.o)
 
