@@ -6,7 +6,7 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/13 07:32:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/19 11:47:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,9 @@
 # include <errno.h>
 # include <termios.h>
 # define PROMPT "minishell> "
+
+//
+
+//tokenizer
 
 #endif

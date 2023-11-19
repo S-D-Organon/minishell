@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/13 07:16:57 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/13 07:17:06 by gdornic          ###   ########.fr       */
+/*   Created: 2023/11/19 10:58:08 by gdornic           #+#    #+#             */
+/*   Updated: 2023/11/19 12:06:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ unsigned int	word_size(char *str, int (*context)(char c))
 		size++;
 		str++;
 	}
+	(*context)('\0');
 	return (size);
 }
 
@@ -40,6 +41,7 @@ unsigned int	word_count(char *str, int (*context)(char c))
 		else
 			str++;
 	}
+	(*context)('\0');
 	return (count);
 }
 

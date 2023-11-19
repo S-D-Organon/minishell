@@ -19,10 +19,5 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	int	stdout_cpy;
-
-	stdout_cpy = dup(1);
-	write(1, "coucou", 6);
-	dup2(stdout_cpy, 1);
-	write(1, "coucou2", 7);
+	printf("%d\n", argc);
 }

@@ -6,27 +6,31 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/13 08:16:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/19 11:15:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//step 1: read input
+//step 2: lexical analysis(convert input into tokens)
+//step 3: syntaxic analysis(interpret tokens)
+//
 int	main(void)
 {
 	char	*input;
-	char	***cmd;
+	char	**token;
 
 	input = readline(PROMPT);
 	while (input != NULL)
 	{
 		add_history(input);
-		cmd = input_parser(input);
+		token = split_context(input, is_token);
 		free(input);
-		if (cmd == NULL)
+		if (token == NULL)
 			break ;
-		cmd_parser(cmd);
-		array_free(cmd, 2);
+		parser(token);
+		array_free(token, 2);
 		input = readline(PROMPT);
 	}
 	return (EXIT_SUCCESS);
