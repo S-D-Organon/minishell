@@ -5,50 +5,47 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 10:58:08 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/19 15:47:03 by gdornic          ###   ########.fr       */
+/*   Created: 2023/11/20 09:30:40 by gdornic           #+#    #+#             */
+/*   Updated: 2023/11/20 09:30:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-unsigned int	word_size(char *str, int (*context)(char c))
+unsigned int	word_size(char *str, int (*context)(char *c))
 {
 	unsigned int	size;
 
 	size = 0;
-	while (*str && (*context)(*str))
+	while (*str && (*context)(str))
 	{
 		size++;
 		str++;
 	}
-	(*context)('\0');
 	return (size);
 }
 
-unsigned int	word_count(char *str, int (*context)(char c))
+unsigned int	word_count(char *str, int (*context)(char *c))
 {
 	unsigned int	count;
 
 	count = 0;
 	while (*str)
 	{
-		if ((*context)(*str))
+		if ((*context)(str))
 		{
 			count++;
-			str++;
 			str += word_size(str, context);
 		}
 		else
 			str++;
 	}
-	(*context)('\0');
 	return (count);
 }
 
 //Split the string str in words defined by a context function.
 //The context function tell us if the character pointed by c is a part of the word or not(i.e.: return true or false).
-char	**split_context(char *str, int (*context)(char c))
+char	**split_context(char *str, int (*context)(char *c))
 {
 	unsigned int	split_len;
 	unsigned int	size;
@@ -62,19 +59,18 @@ char	**split_context(char *str, int (*context)(char c))
 	i = 0;
 	while (*str)
 	{
-		if ((*context)(*str))
+		if ((*context)(str))
 		{
-			str++;
-			size = 1 + word_size(str, context);
+			size = word_size(str, context);
 			split[i] = (char *)malloc(sizeof(char) * (size + 1));
 			if (split[i] == NULL)
 			{
 				array_free(split, 2);
 				return (NULL);
 			}
-			memcpy(split[i], str - 1, (size_t)size);
+			memcpy(split[i], str, (size_t)size);
 			split[i][size] = '\0';
-			str += size - 1;
+			str += size;
 			i++;
 		}
 		else

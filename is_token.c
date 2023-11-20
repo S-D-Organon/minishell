@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 11:15:59 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/19 15:12:52 by gdornic          ###   ########.fr       */
+/*   Created: 2023/11/20 09:32:08 by gdornic           #+#    #+#             */
+/*   Updated: 2023/11/20 10:58:13 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,28 @@
 //	-an operator: sequence of character which must include at least one metacharacter
 //
 //metacharacters: space, tab, newline, '|', '&', ';', '(', ')', '<', '>'
-int	is_token(char c)
+int	is_token(char *c)
 {
-	static char	quote = '\0';
+	static char	*next_quote;
 
-	if (c == '\'')
+	if (c == next_quote)
 	{
-		if (quote == '\0')
-			quote = '\'';
-		else if (quote == '\'')
-			quote = '\0';
-	}
-	else if (c == '"')
-	{
-		if (quote == '\0')
-			quote = '"';
-		else if (quote == '"')
-			quote = '\0';
-	}
-	else if (c == '\0')
-		quote = '\0';
-	if (quote != '\0')
+		next_quote = NULL;
 		return (1);
-	if (c != ' ' && c != '\t')
+	}
+	if (next_quote != NULL && c != next_quote)
+		return (1);
+	if (next_quote == NULL && (*c == '\'' || *c == '"'))
+	{
+		next_quote = c + sizeof(char);
+		while (*next_quote && *next_quote != *c)
+			next_quote += sizeof(char);
+		if (*next_quote == '\0')
+			next_quote -= sizeof(char);
+		if (next_quote == c)
+			next_quote = NULL;
+	}
+	if (*c != ' ' && *c != '\t')
 		return (1);
 	return (0);
 }
