@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:30:40 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/20 09:30:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/21 12:23:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ unsigned int	word_count(char *str, int (*context)(char *c))
 		else
 			str++;
 	}
+	(*context)(NULL);
 	return (count);
 }
 
@@ -77,6 +78,7 @@ char	**split_context(char *str, int (*context)(char *c))
 			str++;
 	}
 	split[i] = NULL;
+	(*context)(NULL);
 	return (split);
 }
 

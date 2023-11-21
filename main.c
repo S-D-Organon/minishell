@@ -6,16 +6,11 @@
 /*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/19 15:18:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/21 11:20:54 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_not_space(char c)
-{
-	return (!isspace(c));
-}
 
 //step 1: read input
 //step 2: lexical analysis(convert input into tokens)
@@ -31,7 +26,7 @@ int	main(void)
 	while (input != NULL)
 	{
 		add_history(input);
-		token = split_context(input, &is_token);
+		token = split_context(input, &token_context);
 		free(input);
 		if (token == NULL)
 			break ;
