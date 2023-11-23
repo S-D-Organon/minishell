@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:32:08 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/21 12:28:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/23 17:19:50 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	word_sequence(char *c, char *previous_c)
 	static char	*next_quote;
 	int		res;
 
+	if (c == NULL)
+	{
+		next_quote = NULL;
+		return (0);
+	}
 	if (previous_c != NULL && is_operator(previous_c))
 		return (0);
 	res = 0;
@@ -32,8 +37,7 @@ int	word_sequence(char *c, char *previous_c)
 		next_quote = c + sizeof(char);
 		while (*next_quote && *next_quote != *c)
 			next_quote += sizeof(char);
-		if (*next_quote == '\0')
-			next_quote -= sizeof(char);
+		next_quote -= (*next_quote == '\0') * sizeof(char);
 	}
 	if (next_quote != NULL)
 		res = 1;
@@ -49,6 +53,11 @@ int	operator_sequence(char *c, char *previous_c)
 	static char	*last_operator;
 	int		res;
 
+	if (c == NULL)
+	{
+		last_operator = NULL;
+		return (0);
+	}
 	if (previous_c != NULL && !isspace(*previous_c) && !is_operator(previous_c))
 		return (0);
 	res = 0;
@@ -79,6 +88,8 @@ int	token_context(char *c)
 
 	if (c == NULL)
 	{
+		word_sequence(NULL, NULL);
+		operator_sequence(NULL, NULL);
 		previous_c = NULL;
 		return (0);
 	}
