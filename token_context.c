@@ -29,7 +29,7 @@ int	word_sequence(char *c, char *previous_c)
 		next_quote = NULL;
 		return (0);
 	}
-	if (previous_c != NULL && is_operator(previous_c))
+	if (previous_c != NULL && next_quote == NULL && is_operator(previous_c))
 		return (0);
 	res = 0;
 	if (next_quote == NULL && (*c == '\'' || *c == '"'))
