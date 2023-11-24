@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/02/09 14:31:59 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/02/09 15:14:14 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+void	ft_putchar_fd(char c, int fd)
 {
-	
+	write(fd, &c, 1);
 }

@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/02/09 17:26:45 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/02/12 13:34:11 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+t_list	*ft_lstnew(void *content)
 {
-	
+	t_list	*new;
+
+	new = (t_list *)malloc(sizeof(t_list));
+	if (!new)
+		return (NULL);
+	new->content = content;
+	new->next = NULL;
+	return (new);
 }

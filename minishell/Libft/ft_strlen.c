@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/02/01 11:40:41 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/02/01 13:44:58 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stddef.h>
 
-extern char	*environ;
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+size_t	ft_strlen(const char *str)
 {
-	
+	size_t	i;
+
+	i = 0;
+	while (str[i] != '\0')
+		i++;
+	return (i);
 }

@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/02/01 16:21:59 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/02/01 16:29:38 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+int	ft_toupper(int c)
 {
-	
+	if (c >= 'a' && c <= 'z')
+		c -= 32;
+	return (c);
 }

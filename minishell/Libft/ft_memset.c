@@ -1,18 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/02/01 11:46:40 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/02/07 15:12:26 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+void	*ft_memset(void *pointer, int value, size_t count)
 {
-	
+	char	*tmp;
+	size_t	i;
+
+	tmp = (char *) pointer;
+	i = 0;
+	while (i < count)
+	{
+		tmp[i] = (char) value;
+		i++;
+	}
+	return (pointer);
 }

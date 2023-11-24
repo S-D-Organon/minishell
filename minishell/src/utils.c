@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/11/23 13:47:15 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/11/23 13:48:20 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "../include/minishell.h"
 
-char	**unset_builtin(char **args)
+int	ft_strcmp(char *s1, char *s2)
 {
-	
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s2[i] == s1[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

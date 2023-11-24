@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 15:16:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/23 16:20:38 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/11/23 14:59:53 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	cd_builtin(char *path)
 		return (-1);
 	return (0);
 }
-/*
+
 int	ft_strlen(char *str)
 {
 	int	i;
@@ -103,5 +103,3 @@ int	main(int argc, char *argv[])
 	}
 	return (0);
 }
-*/
-

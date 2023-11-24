@@ -1,18 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   exit_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/11/24 14:22:00 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/11/24 14:34:06 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include "../include/minishell.h"
 
-char	**unset_builtin(char **args)
+void	exit_builtin(t_data *data)
 {
-	
+	if (data->arg[0] == NULL || ft_strcmp(data->arg[0], "exit") != 0)
+		return ;
+	exit(0);
 }

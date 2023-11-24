@@ -1,18 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_builtin.c                                    :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/25 15:57:05 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/08 19:23:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2022/12/12 09:24:07 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/07/13 11:21:46 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-extern char	*environ;
+#include <string.h>
+#include "libft.h"
 
-char	**unset_builtin(char **args)
+char	*ft_strdup(char *src)
 {
-	
+	char	*tab;
+	size_t	i;
+	size_t	len;
+
+	len = ft_strlen(src);
+	tab = (char *)(malloc(sizeof(char) * (len + 1)));
+	if (tab == NULL)
+		return (NULL);
+	i = 0;
+	while (src[i] != '\0')
+	{
+		tab[i] = src[i];
+		i++;
+	}
+	tab[i] = '\0';
+	return (tab);
 }
