@@ -16,8 +16,32 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
+#include <stdlib.h>
+#include <string.h>
+
+void	function_test(void);
+
+const char	**supported_operators(void)
+{
+	static const char	*operators[] = {"<", "<<", ">", ">>", "|", "||", "&&", NULL};
+
+	return (operators);
+}
+
+char	**global_envp(char *envp[])
+{
+	static char	**test;
+
+	if (test == NULL)
+		test = envp;
+	return (test);
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	printf("%d\n", argc);
+	char	str[] = "test";
+	char	sub[] = "te";
+
+	printf("%d\n", strncmp(str, sub, 3));
 }

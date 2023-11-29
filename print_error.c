@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr>   +#+  +:+       +#+        */
+/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:56:50 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/20 10:05:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/29 22:44:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	str_len(char *str)
+int	ft_strlen(char *str)
 {
 	int	len;
 
@@ -25,10 +25,10 @@ int	str_len(char *str)
 void	print_error(char *prefix, char *error, char *suffix)
 {
 	if (prefix != NULL)
-		write(2, prefix, str_len(prefix));
+		write(2, prefix, ft_strlen(prefix));
 	if (error != NULL)
-		write(2, error, str_len(error));
+		write(2, error, ft_strlen(error));
 	if (suffix != NULL)
-		write(2, suffix, str_len(suffix));
+		write(2, suffix, ft_strlen(suffix));
 	write(2, "\n", 1);
 }

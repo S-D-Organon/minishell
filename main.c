@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/21 11:20:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/11/29 22:48:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,23 @@
 int	main(void)
 {
 	char	*input;
-	char	**token;
-	int	i;
+	t_list	*token;
 
 	input = readline(PROMPT);
+	errno = 0;
 	while (input != NULL)
 	{
 		add_history(input);
-		token = split_context(input, &token_context);
+		token = tokenizer(input);
 		free(input);
-		if (token == NULL)
+		if (errno == ENOMEM)
 			break ;
-		//parser(token);
-		i = 0;
-		while (token[i] != NULL)
-		{
-			printf("[%d]:%s\n", i, token[i]);
-			fflush(stdout);
-			i++;
-		}
-		array_free(token, 2);
+		token_print(token);
+		//errno = parser(token);
+		ft_lstclear(&token, &free);
+		//if (errno == ENOMEM)
+		//	break ;
 		input = readline(PROMPT);
 	}
-	return (EXIT_SUCCESS);
+	return (errno);
 }
