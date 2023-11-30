@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 12:02:46 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/24 14:42:05 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/11/30 15:02:55 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	ft_init_args(t_data *data, char *input)
 	int	i;
 
 	i = 0;
+	data->oldpwd = NULL;
 	data->arg = ft_split(input, ' ');
 	free(input);
 	while (data->arg[i])
@@ -51,17 +52,14 @@ int	main(int ac, char **ag, char **env)
 
 	data = malloc(sizeof(t_data));
 	ft_init_env(env, data);
+	//signal(SIGINT, ft_signals(data));
 	while (1)
 	{
 		input = readline("minishell : ");
 		if (input != NULL && input[0] != '\0')
 		{
 			ft_init_args(data, input);
-			pwd_builtin(data);
-			echo_builtin(data);
-			cd_builtin(data);
-			env_builtin(data);
-			exit_builtin(data);
+			cd_builtin(data->arg + 1, data->env);
 		}
 	}
 }

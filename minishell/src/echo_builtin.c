@@ -6,40 +6,31 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:22:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/23 14:58:20 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/11/27 13:00:54 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	echo_builtin(t_data *data)
+void	echo_builtin(char **arg, char **env)
 {
 	int	i;
 
-	i = 1;
-	if (ft_strcmp("echo", data->arg[0]) == 0)
+	i = 0;
+	(void)env;
+	if (arg[0] != NULL)
 	{
-		if (data->arg[1] != NULL && ft_strcmp("-n", data->arg[1]) == 0)
+		if (strcmp(arg[0], "-n") == 0)
+			i++;
+		while (arg[i + 1])
 		{
-			i = 2;
-			while (i < data->sizedata)
-			{
-				ft_printf("%s", data->arg[i]);
-				ft_printf(" ");
-				i++;
-			}
-			ft_printf("%s", data->arg[i]);
+			printf("%s", arg[i]);
+			printf(" ");
+			i++;
 		}
-		else if (data->sizedata > 0)
-		{
-			while (i < data->sizedata)
-			{
-				ft_printf("%s", data->arg[i]);
-				ft_printf(" ");
-				i++;
-			}
-			ft_printf("%s", data->arg[i]);
-			ft_printf("\n");
-		}
+		printf("%s", arg[i]);
+		if (ft_strcmp(arg[0], "-n") == 0)
+			return ;
 	}
+	printf("\n");
 }

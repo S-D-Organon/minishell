@@ -6,88 +6,78 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/24 14:09:21 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/11/27 15:49:32 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char *ft_path(t_data *data, char *current_directory)
+void	cd_builtin(char **arg, char **env)
 {
-	char *path;
-
-	path = ft_strjoin(current_directory, "/");
-	path = ft_strjoin(current_directory, data->arg[data->sizedata]);
-	return (path);
-}
-
-void ft_while(int i, int j, char *path, char *current_directory)
-{
-	while (j < i)
-	{
-		path[j] = current_directory[j];
-		j++;
-	}
-}
-
-int	ft_whilefori(int i, char *current_directory)
-{
-	while (current_directory[i])
-		i++;
-	i--;
-	return (i);
-}
-
-void	cd_builtin(t_data *data)
-{
-	char	current_directory[PATH_MAX];
-	char	*path;
-	int		i;
-	int		j;
+	int	i;
+	char pwd[PATH_MAX];
 
 	i = 0;
-	j = 0;
-	data->oldpwd = getcwd(data->oldpwd, PATH_MAX);
-	if (data->arg[0] == NULL || ft_strcmp(data->arg[0], "cd") != 0)
-		return ;
-	if (data->sizedata == 1)
+	if (arg[0] == NULL)
 	{
-		if (ft_strcmp(data->arg[data->sizedata], "..") == 0 || ft_strcmp(data->arg[data->sizedata], "../") == 0)
+		while (env[i])
 		{
-			i = ft_whilefori(i, current_directory);
-			while (current_directory[i] != '/')
-				i--;
-			path = malloc(sizeof(char) * (i + 1));
-			ft_while(i, j, path, current_directory);
-		}
-		else
-			path = ft_path(data, current_directory);
-	}
-	else if (data->sizedata == 0)
-		path = getenv("HOME");
-	else if (data->sizedata > 1)
-	{
-		ft_printf("cd :too many args\n");
-		return ;
-	}
-	if (chdir(path) == -1)
-		ft_printf("%s: not in pwd\n", data->arg[data->sizedata]);
-	else
-	{
-		i = 0;
-		while (data->env[i])
-		{
-			if (data->env[i][0] == 'O' && data->env[i][1] == 'L' && data->env[i][2] == 'D')
-			{
-				free(data->env[i]);
-				data->env[i] = ft_strjoin("OLDPWD=", data->oldpwd);
-			}
-			if (data->env[i][0] == 'P' && data->env[i][1] == 'W' && data->env[i][2] == 'D')
-			{
-				free(data->env[i]);
-				data->env[i] = ft_strjoin("PWD=", getcwd(path, PATH_MAX));
-			}
+			if (env[i][0] == 'O' && env[i][1] == 'L' && env[i][2] == 'D' && env[i][3] == 'P' && env[i][4] == 'W' && env[i][5] == 'D')
+				break;
 			i++;
 		}
+		free(env[i]);
+		if (getcwd(pwd, PATH_MAX) != NULL)
+		env[i] = ft_strjoin("OLDPWD=", pwd);
+		printf("%s\n", env[i]);
+		i = 0;
+		while (env[i])
+		{
+			if (env[i][0] == 'P' && env[i][1] == 'W' && env[i][2] == 'D')
+				break;
+			i++;
+		}
+		free(env[i]);
+		chdir(getenv("HOME"));
+		if (getcwd(pwd, PATH_MAX) != NULL)
+		env[i] = ft_strjoin("PWD=", pwd);
+		printf("%s\n", env[i]);
+	}
+	else if (arg[1] != NULL)
+		printf("cd : string not in pwd %s\n", arg[0]);
+	else
+	{
+		while (env[i])
+		{
+			if (env[i][0] == 'O' && env[i][1] == 'L' && env[i][2] == 'D' && env[i][3] == 'P' && env[i][4] == 'W' && env[i][5] == 'D')
+				break;
+			i++;
+		}
+		free(env[i]);
+		if (getcwd(pwd, PATH_MAX) != NULL)
+			env[i] = ft_strjoin("PWD=", pwd);
+		if (chdir(arg[0]) != 0)
+			printf("cd : no such file or directory : %s\n", arg[0]);
+		else
+			while (env[i])
+		{
+			if (env[i][0] == 'O' && env[i][1] == 'L' && env[i][2] == 'D' && env[i][3] == 'P' && env[i][4] == 'W' && env[i][5] == 'D')
+				break;
+			i++;
+		}
+		free(env[i]);
+		env[i] = ft_strjoin("OLDPWD=", getenv("PWD"));
+		printf("%s\n", env[i]);
+		i = 0;
+		while (env[i])
+		{
+			if (env[i][0] == 'P' && env[i][1] == 'W' && env[i][2] == 'D')
+				break;
+			i++;
+		}
+		free(env[i]);
+		if (getcwd(pwd, PATH_MAX) != NULL)
+		env[i] = ft_strjoin("PWD=", pwd);
+		printf("%s\n", env[i]);
 	}
 }
