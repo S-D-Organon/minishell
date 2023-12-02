@@ -1,0 +1,99 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   syntax_rules.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/02 18:27:35 by gdornic           #+#    #+#             */
+/*   Updated: 2023/12/02 20:37:49 by gdornic          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+int	syntax_error(char *content)
+{
+	ft_putstr_fd(ERROR_PREFIX, 2);
+	ft_putstr_fd("syntax error near unexpected token `", 2);
+	if (content != NULL)
+		ft_putstr_fd(content, 2);
+	else
+		ft_putstr_fd("newline", 2);
+	ft_putstr_fd("'\n", 2);
+	return (1);
+}
+
+int	quotes_check(char *str)
+{
+	char	quote;
+	int		i;
+
+	i = 0;
+	quote = '\0';
+	while (str[i])
+	{
+		if (quote == '\0' && str[i] == '\'')
+			quote = '\'';
+		else if (quote == '\0' && str[i] == '"')
+			quote = '"';
+		else if (quote == '\'' && str[i] == '\'')
+			quote = '\0';
+		else if (quote == '"' && str[i] == '"')
+			quote = '\0';
+		i++;
+	}
+	if (quote != '\0')
+		return (1);
+	return (0);
+}
+
+int	operator_rules(char *content, char *next_content)
+{
+	if (is_redirection_operator(content))
+	{
+		if (!(is_word(next_content)))
+			return (syntax_error(next_content));
+	}
+	else if (is_pipe(content))
+	{
+		if (!(is_word(next_content) || is_redirection_operator(next_content)))
+			return (syntax_error(next_content));
+	}
+	else if (is_list_operator(content))
+	{
+		if (!(is_word(next_content) || is_redirection_operator(next_content) || is_left_bracket(next_content)))
+			return (syntax_error(next_content));
+	}
+	else if (is_left_bracket(content))
+	{
+		if (!(is_word(next_content) || is_redirection_operator(next_content) || is_left_bracket(next_content)))
+			return (syntax_error(next_content));
+	}
+	else if (is_right_bracket(content))
+	{
+		if (!(is_right_bracket(next_content) || is_list_operator(next_content) || next_content == NULL))
+			return (syntax_error(next_content));
+	}
+	return (0);
+}
+
+//describe every rules for tokens as "what can be next to the token"
+int	syntax_rules(t_list *token)
+{
+	char	*content;
+	char	*next_content;
+
+	content = token->content;
+	if (token->next != NULL)
+		next_content = token->next->content;
+	else
+		next_content = NULL;
+	if (is_word(content))
+		return (word_rules(content, next_content));
+	else if (is_operator(content))
+		return (operator_rules(content, next_content));
+	else
+		return (syntax_error(content));
+	return (0);
+}

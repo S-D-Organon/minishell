@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/29 23:09:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/02 20:15:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ typedef struct s_command
 	int		exit_status;
 }	t_command;
 
-//token context
-int	is_operator(char *c);
-int	token_context(char *c);
-
-//split context
-char	**split_context(char *str, int (*context)(char *c));
-
 //array free
 void	array_free(void *root, unsigned int dimension);
 
@@ -58,9 +51,26 @@ void	print_error(char *prefix, char *error, char *suffix);
 //definitions
 int			is_space(int c);
 int			is_metacharacter(int c);
+int			is_operator(char *str);
+int			is_redirection_operator(char *str);
+int			is_control_operator(char *str);
+int			is_pipe(char *str);
+int			is_left_bracket(char *str);
+int			is_right_bracket(char *str);
+int			is_word(char *str);
+int			is_bracket(char *str);
+
+//function variables
 const char	**operators_set(void);
 
 //token print
 void	token_print(t_list *token);
+
+//parser
+int	parser(t_list *token);
+
+//syntax_rules
+int	syntax_error(char *content);
+int	syntax_rules(t_list *token);
 
 #endif

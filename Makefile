@@ -6,7 +6,7 @@
 #    By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/11/29 22:37:21 by gdornic          ###   ########.fr        #
+#    Updated: 2023/12/02 20:35:42 by gdornic          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilibft
 
 LIB_LINK = -L/usr/include -lreadline -Llibft -lft
 
-SRC = main.c array_free.c tokenizer.c definitions.c token_print.c
+SRC = main.c array_free.c tokenizer.c definitions.c token_print.c function_variables.c parser.c syntax_rules.c
 
 OBJ = $(SRC:.c=.o)
 
