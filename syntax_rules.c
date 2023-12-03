@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/02 18:27:35 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/02 20:37:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:04:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	syntax_error(char *content)
 	return (1);
 }
 
-int	quotes_check(char *str)
+int	quotes_rule(char *str)
 {
 	char	quote;
 	int		i;
@@ -45,6 +45,27 @@ int	quotes_check(char *str)
 	}
 	if (quote != '\0')
 		return (1);
+	return (0);
+}
+
+int	bracket_count_rule(char *content, char *next_content)
+{
+	static int	left_bracket_count = 0;
+	static int	right_bracket_count = 0;
+
+	if (content == NULL)
+	{
+		left_bracket_count = 0;
+		right_bracket_count = 0;
+	}
+	if (is_left_bracket(content))
+		left_bracket_count++;
+	if (is_right_bracket(content))
+		right_bracket_count++;
+	if (right_bracket_count > left_bracket_count)
+		return (syntax_error(content));
+	if (next_content == NULL && left_bracket_count != right_bracket_count)
+		return (syntax_error(next_content));
 	return (0);
 }
 
@@ -75,6 +96,17 @@ int	operator_rules(char *content, char *next_content)
 		if (!(is_right_bracket(next_content) || is_list_operator(next_content) || next_content == NULL))
 			return (syntax_error(next_content));
 	}
+	if (bracket_count_rule(content, next_content))
+		return (1);
+	return (0);
+}
+
+int	word_rules(char *content, char *next_content)
+{
+	if (quotes_rule(content))
+		return (syntax_error(next_content));
+	if (bracket_count_rule(content, next_content))
+		return (1);
 	return (0);
 }
 

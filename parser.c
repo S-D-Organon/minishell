@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:17:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/02 20:37:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/03 20:59:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	syntax_check(t_list *token)
 {
+	bracket_count_rule(NULL, NULL);
 	if (is_control_operator((char *)token->content))
 		return (syntax_error((char *)token->content));
 	while (token != NULL)
