@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:17:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/03 20:59:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/05 21:14:42 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,9 @@ int	syntax_check(t_list *token)
 	return (0);
 }
 
-int	parser(t_list *token)
+int	parser(t_list *token, char ***envp_ptr)
 {
-	//t_list	*pipeline;
-
 	if (syntax_check(token))
 		return (2);
-	/*
-	pipeline = pipeline_list_init(token);
-	if (pipeline == NULL)
-		return (errno);
-	errno = pipeline_list_exec(pipeline);
-	ft_lstclear(&pipeline, &command_delete);
-	*/
-	return (errno);
+	return (execution(token, envp_ptr, 0));
 }

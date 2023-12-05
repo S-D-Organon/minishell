@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/30 17:34:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/05 21:13:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,13 @@
 //step 3: syntaxic analysis(check token positioning)
 //step 4: interpret tokens into list of pipeline(s)
 //step 5: execute pipeline(s)
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	char	*input;
 	t_list	*token;
 
+	(void)argc;
+	(void)argv;
 	input = readline(PROMPT);
 	errno = 0;
 	while (input != NULL)
@@ -33,7 +35,7 @@ int	main(void)
 			break ;
 		token_print(token);
 		if (token != NULL)
-			errno = parser(token);
+			errno = parser(token, &envp);
 		printf("errno: %d\n", errno);
 		ft_lstclear(&token, &free);
 		if (errno == ENOMEM)

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/03 21:56:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/05 21:15:27 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,6 @@
 # define ERROR_PREFIX "minishell: "
 # define PROMPT "minishell> "
 
-typedef struct s_command
-{
-	char	**word;
-	int		input;
-	int		output;
-	int		exit_status;
-}	t_command;
-
 //array free
 void	array_free(void *root, unsigned int dimension);
 
@@ -49,17 +41,17 @@ t_list	*tokenizer(char *input);
 void	print_error(char *prefix, char *error, char *suffix);
 
 //definitions
-int			is_space(int c);
-int			is_metacharacter(int c);
-int			is_operator(char *str);
-int			is_redirection_operator(char *str);
-int			is_control_operator(char *str);
-int			is_pipe(char *str);
-int			is_list_operator(char *str);
-int			is_left_bracket(char *str);
-int			is_right_bracket(char *str);
-int			is_word(char *str);
-int			is_bracket(char *str);
+int	is_space(int c);
+int	is_metacharacter(int c);
+int	is_operator(char *str);
+int	is_redirection_operator(char *str);
+int	is_control_operator(char *str);
+int	is_pipe(char *str);
+int	is_list_operator(char *str);
+int	is_left_bracket(char *str);
+int	is_right_bracket(char *str);
+int	is_word(char *str);
+int	is_bracket(char *str);
 
 //function variables
 const char	**operators_set(void);
@@ -68,11 +60,14 @@ const char	**operators_set(void);
 void	token_print(t_list *token);
 
 //parser
-int	parser(t_list *token);
+int	parser(t_list *token, char ***envp_ptr);
 
 //syntax_rules
 int	syntax_error(char *content);
 int	bracket_count_rule(char *content, char *next_content);
 int	syntax_rules(t_list *token);
+
+//execution
+int	execution(t_list *token, char ***envp_ptr, int exit_status);
 
 #endif

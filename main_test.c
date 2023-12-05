@@ -38,10 +38,15 @@ char	**global_envp(char *envp[])
 	return (test);
 }
 
+int	recursive_test(char c)
+{
+	if (c == 'c')
+		return (1);
+	printf("%c", c);
+	return (recursive_test(c + 1));
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	char	str[] = "test";
-	char	sub[] = "te";
-
-	printf("%d\n", strncmp(str, sub, 3));
+	printf("%d\n", recursive_test('a'));
 }

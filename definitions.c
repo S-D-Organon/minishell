@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 20:27:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/02 20:15:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/05 14:01:25 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,14 @@ int	is_bracket(char *str)
 		return (0);
 	if (*str == '(' || *str == ')')
 		return (1);
+	return (0);
+}
+
+int	is_execution_operator(char *str)
+{
+	if (is_bracket(str) || is_list_operator(str))
+	{
+		return (1);
+	}
 	return (0);
 }
