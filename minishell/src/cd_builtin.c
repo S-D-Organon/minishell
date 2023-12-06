@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 18:30:27 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/07 00:06:07 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,6 @@ int	ft_findpwd(char **env)
 		i++;
 	}
 	return (i);
-}
-
-char	*ft_getcwd(char *env, char *pwd, char *choose)
-{
-	if (getcwd(pwd, PATH_MAX) != NULL)
-		env = ft_strjoin(choose, pwd);
-	return (env);
 }
 
 char	**cd_home(char **env, int i, char *pwd)

@@ -1,5 +1,5 @@
 PROG	= minishell
-SRCS	= src/main.c src/utils.c src/pwd_builtin.c src/echo_builtin.c src/cd_builtin.c src/env_builtin.c src/exit_builtin.c src/export_builtin.c src/unset_builtin.c
+SRCS	= src/main.c src/reverse_split.c src/sort_env.c src/utils.c src/pwd_builtin.c src/echo_builtin.c src/cd_builtin.c src/env_builtin.c src/exit_builtin.c src/export_builtin.c src/unset_builtin.c
 OBJS 	= ${SRCS:.c=.o}
 
 HEADER	= -Iinclude

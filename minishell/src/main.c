@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 12:02:46 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 18:50:54 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:49:09 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	main(int ac, char **ag, char **env)
 		if (input != NULL && input[0] != '\0')
 		{
 			ft_init_args(data, input);
-			cd_builtin(data->arg + 1, &data->env);
+			export_builtin(data->arg + 1, &data->env);
 		}
 	}
 }
