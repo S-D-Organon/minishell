@@ -6,17 +6,17 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:45:56 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/27 13:12:45 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:01:37 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	pwd_builtin(char **arg, char **env)
+void	pwd_builtin(char **arg, char ***env)
 {
-	char pwd[PATH_MAX];
+	char	pwd[PATH_MAX];
+
 	(void)env;
-	
 	if (arg[0] != NULL)
 	{
 		printf("pwd: too many arguments\n");

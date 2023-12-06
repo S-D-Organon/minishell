@@ -6,13 +6,13 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:22:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/27 13:00:54 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:01:49 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	echo_builtin(char **arg, char **env)
+void	echo_builtin(char **arg, char ***env)
 {
 	int	i;
 

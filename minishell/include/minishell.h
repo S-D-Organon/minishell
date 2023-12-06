@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/30 16:38:54 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:28:24 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,17 @@ typedef struct s_data
 //utils.c
 int	ft_strcmp(char *s1, char *s2);
 //pwd_builtin.c
-void	pwd_builtin(char **arg, char **env);
+void	pwd_builtin(char **arg, char ***env);
 //echo_builtin.c
-void	echo_builtin(char **arg, char **env);
+void	echo_builtin(char **arg, char ***env);
 //cd_builtin.c
-void	cd_builtin(char **arg, char **env);
+void	cd_builtin(char **arg, char ***env);
 //env_builtin.c
 void	env_builtin(char **arg, char ***env);
 //exit_builtin.c
-void	exit_builtin(char **arg, char **env);
+void	exit_builtin(char **arg, char ***env);
 //export_builtin.c
-void	export_builtin(t_data *data);
+void	export_builtin(char **arg, char ***env);
 //signals.c
 void	ft_signals(int sig, t_data *data);
 //unset
