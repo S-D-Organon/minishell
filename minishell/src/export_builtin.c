@@ -6,13 +6,13 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/24 18:04:48 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:19:20 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**sort_env(t_data *data)
+char	**sort_env(char **env)
 {
 	int		i;
 	int		j;
@@ -20,11 +20,13 @@ char	**sort_env(t_data *data)
 	char **newenv;
 
 	tmp = NULL;
-	newenv = malloc(sizeof(char *) * (data->sizeenv + 1));
+	while (env[i])
+		i++;
+	newenv = malloc(sizeof(char *) * (i+ 1));
 	i = 0;
-	while (data->env[i])
+	while (env[i])
 	{
-		newenv[i] = ft_strdup(data->env[i]);
+		newenv[i] = ft_strdup(env[i]);
 		i++;
 	}
 	newenv[i] = NULL;

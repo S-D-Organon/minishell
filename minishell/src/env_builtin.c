@@ -6,27 +6,27 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:36:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/24 14:15:44 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/11/30 16:39:56 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	env_builtin(t_data *data)
+void	env_builtin(char **arg, char ***env)
 {
 	int	i;
 
 	i = 0;
-	if (data->arg[0] == NULL || ft_strcmp(data->arg[0], "env"))
+	if (arg[0] == NULL || ft_strcmp(arg[0], "env") != 0)
 		return ;
-	if (data->arg[1] != NULL)
+	if (arg[1] != NULL)
 	{
 		ft_printf("no args needed\n");
 		return ;
 	}
-	while (data->env[i])
+	while ((*env)[i])
 	{
-		ft_printf("%s\n", data->env[i]);
+		ft_printf("%s\n", (*env)[i]);
 		i++;
 	}
 }
