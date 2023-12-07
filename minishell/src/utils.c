@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:47:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/07 00:06:21 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:45:12 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_chr(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] == c)
-			return (1);
+			return (i + 1);
 		i++;
 	}
 	return (0);
