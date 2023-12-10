@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/05 21:15:27 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 04:11:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,16 @@
 # define ERROR_PREFIX "minishell: "
 # define PROMPT "minishell> "
 
+typedef struct s_stream
+{
+	int	input;
+	int	output;
+	int	next_input;
+	int	previous_output;
+	int	saved_stdin_fd;
+	int	saved_stdout_fd;
+}	t_stream;
+
 //array free
 void	array_free(void *root, unsigned int dimension);
 
@@ -52,9 +62,15 @@ int	is_left_bracket(char *str);
 int	is_right_bracket(char *str);
 int	is_word(char *str);
 int	is_bracket(char *str);
+int	is_or(char *str);
+int	is_and(char *str);
+int	is_executable(char *path_name);
+int	is_builtin(char *cmd);
 
 //function variables
 const char	**operators_set(void);
+t_stream	*m_stream(void);
+int			*m_exit_code(void);
 
 //token print
 void	token_print(t_list *token);
@@ -69,5 +85,27 @@ int	syntax_rules(t_list *token);
 
 //execution
 int	execution(t_list *token, char ***envp_ptr, int exit_status);
+
+//pipeline execution
+int	pipeline_execution(t_list *pipeline, char ***envp_ptr, int exit_status);
+
+//command execution
+int	m_stream_use(void);
+int	command_execution(t_list *command, char ***envp_ptr, int exit_status, int builtin_create_subshell);
+
+//builtin execution
+int	builtin_execution(char **cmd, char ***envp_ptr, int builtin_create_subshell);
+
+//program execution
+int	program_execution(char **cmd, char **envp);
+
+//redirection
+int	input_redirect(char *file_name);
+int	here_doc(char *delimiter);
+int	output_redirect(char *file_name);
+int	output_redirect_append(char *file_name);
+
+//expansion
+char	*content_expand(char *content, char **envp);
 
 #endif

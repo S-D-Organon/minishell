@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 20:27:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/05 14:01:25 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 05:26:32 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	is_list_operator(char *str)
 
 	if (str == NULL)
 		return (0);
-	i = 6;
+	i = 5;
 	while (i < 7)
 	{
 		if (ft_strncmp(operators_set()[i], str, ft_strlen(operators_set()[i])) == 0)
@@ -95,7 +95,7 @@ int	is_pipe(char *str)
 {
 	if (str == NULL)
 		return (0);
-	if (*str == '|')
+	if (!ft_strncmp(str, "|", ft_strlen(str)))
 		return (1);
 	return (0);
 }
@@ -136,11 +136,93 @@ int	is_bracket(char *str)
 	return (0);
 }
 
-int	is_execution_operator(char *str)
+int	is_and(char *str)
 {
-	if (is_bracket(str) || is_list_operator(str))
-	{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp("&&", str, -1))
 		return (1);
+	return (0);
+}
+
+int	is_or(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp("||", str, -1))
+		return (1);
+	return (0);
+}
+
+int	is_left_arrow(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp("<", str, -1))
+		return (1);
+	return (0);
+}
+
+int	is_right_arrow(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp(">", str, -1))
+		return (1);
+	return (0);
+}
+
+int	is_double_left_arrow(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp("<<", str, -1))
+		return (1);
+	return (0);
+}
+
+int	is_double_right_arrow(char *str)
+{
+	if (str == NULL)
+		return (0);
+	if (!ft_strncmp(">>", str, -1))
+		return (1);
+	return (0);
+}
+
+int	is_executable(char *path_name)
+{
+	if (access(path_name, F_OK))
+		return (0);
+	if (access(path_name, X_OK))
+	{
+		*m_exit_code() = 126;
+		ft_putstr_fd(ERROR_PREFIX, 2);
+		ft_putstr_fd(path_name, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		return (0);
 	}
+	return (1);
+}
+
+int	is_builtin(char *cmd)
+{
+	if (cmd == NULL)
+		return (0);
+	if (!ft_strncmp(cmd, "echo", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "cd", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "pwd", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "export", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "unset", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "env", -1))
+		return (1);
+	if (!ft_strncmp(cmd, "exit", -1))
+		return (1);
 	return (0);
 }

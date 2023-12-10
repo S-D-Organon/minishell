@@ -19,6 +19,8 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	function_test(void);
 
@@ -46,7 +48,27 @@ int	recursive_test(char c)
 	return (recursive_test(c + 1));
 }
 
-int	main(int argc, char *argv[], char *envp[])
+typedef struct s_stream
 {
-	printf("%d\n", recursive_test('a'));
+	int	a;
+	int	b;
+}	t_stream;
+
+t_stream	*test_stream(void)
+{
+	static t_stream	tstream;
+
+	return (&tstream);
+}
+
+int	main(int argc, char *argv[], char **envp)
+{
+	int	saved_fd;
+
+	saved_fd = dup(1);
+	dup2(saved_fd, 1);
+	dup2(saved_fd, 1);
+	dup2(saved_fd, 1);
+	dup2(saved_fd, 1);
+	printf("coucou");
 }

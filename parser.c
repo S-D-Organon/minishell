@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 09:17:25 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/05 21:14:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 01:01:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,11 @@ int	syntax_check(t_list *token)
 
 int	parser(t_list *token, char ***envp_ptr)
 {
+	(void)envp_ptr;
 	if (syntax_check(token))
-		return (2);
+	{
+		*m_exit_code() = 2;
+		return (0);
+	}
 	return (execution(token, envp_ptr, 0));
 }

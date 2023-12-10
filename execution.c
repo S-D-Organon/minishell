@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/05 22:18:39 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 04:58:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@ t_list	*next_list_operator(t_list *token)
 	return (token);
 }
 
+t_list	*skip_group(t_list *token)
+{
+	int	left_bracket_count;
+
+	left_bracket_count = 0;
+	while (token != NULL && is_left_bracket(token->content))
+	{
+		left_bracket_count++;
+		token = token->next;
+	}
+	while (left_bracket_count > 0)
+	{
+		if (is_right_bracket(token->content))
+			left_bracket_count--;
+		token = token->next;
+	}
+	return (next_list_operator(token));
+}
+
 t_list	*next_pipeline(t_list *token)
 {
 	t_list	*pipeline;
@@ -26,7 +45,7 @@ t_list	*next_pipeline(t_list *token)
 	char	*content;
 
 	pipeline = NULL;
-	while (is_bracket(token->content))
+	while (is_bracket(token->content) || is_list_operator(token->content))
 		token = token->next;
 	while (token != NULL && !is_list_operator(token->content) && !is_bracket(token->content))
 	{
@@ -35,7 +54,10 @@ t_list	*next_pipeline(t_list *token)
 			break ;
 		new = ft_lstnew(content);
 		if (new == NULL)
+		{
+			free(content);
 			break ;
+		}
 		ft_lstadd_back(&pipeline, new);
 		token = token->next;
 	}
@@ -45,31 +67,27 @@ t_list	*next_pipeline(t_list *token)
 }
 
 //step 1: make the next pipeline from the token list
-//step 2: perform expansion
-//step 3: perform redirection
-//step 3: execute the pipeline
-//step 4: search the next list operator, if NULL is found stop the recursion
-//step 5: evaluate exit status, potentially skip the next group of pipelines
-//step 6: go back to step 1 with a new position in the token list
+//step 2: execute the pipeline
+//step 3: search the next list operator, if NULL is found stop the recursion
+//step 4: evaluate exit status, potentially skip the next group of pipelines
+//step 5: go back to step 1 with a new position in the token list
 int	execution(t_list *token, char ***envp_ptr, int exit_status)
 {
 	t_list	*pipeline;
 
-	(void)envp_ptr;
-	(void)exit_status;
 	pipeline = next_pipeline(token);
 	if (pipeline == NULL)
 		return (errno);
-	if (expansion(pipeline, *envp))
-		return (errno);
-	if (!redirection(pipeline))
-		exit_status = pipeline_execution(pipeline, envp);
+	exit_status = pipeline_execution(pipeline, envp_ptr, 0);
+	ft_lstclear(&pipeline, &free);
+	if (exit_status == ENOMEM)
+		return (exit_status);
 	token = next_list_operator(token);
 	if (token == NULL)
 		return (exit_status);
-	if (token->content == "&&" && exit_status)
+	if (is_and(token->content) && exit_status)
 		token = skip_group(token);
-	else if (token->content == "||" && !exit_status)
+	else if (is_or(token->content) && !exit_status)
 		token = skip_group(token);
-	return (execution(token, envp, exit_status));
+	return (execution(token->next, envp_ptr, exit_status));
 }
