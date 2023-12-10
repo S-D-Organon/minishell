@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 03:38:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 21:33:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,10 @@ int	minishell_loop(char ***envp_ptr)
 		if (token != NULL)
 			exit_status = parser(token, envp_ptr);
 		ft_lstclear(&token, &free);
-		if (errno == ENOMEM)
+		if (errno == ENOMEM || exit_status)
 			break ;
 		input = readline(PROMPT);
 	}
-	printf("%d\n", exit_status);
 	return (*m_exit_code());
 }
 

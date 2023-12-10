@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 06:15:29 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 22:52:17 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,8 @@ t_list	*next_expanded_command(t_list *pipeline, char **envp)
 	char	*content;
 
 	command = NULL;
-	while (is_pipe(pipeline->content))
-		pipeline = pipeline->next;
 	while (pipeline != NULL && !is_pipe(pipeline->content))
 	{
-		if (is_redirection_operator(pipeline->content))
-			pipeline = pipeline->next->next;
 		content = content_expand(pipeline->content, envp);
 		if (content == NULL)
 			break ;
@@ -90,10 +86,10 @@ int	pipeline_routine(t_list *pipeline, char ***envp_ptr, int exit_status, int bu
 		if (next_pipe(pipeline) == NULL)
 		{
 			if (pipe_set(1))
-				return (errno);
+				return (0);
 		}
 		else if (pipe_set(0))
-			return (errno);
+			return (0);
 	}
 	exit_status = command_execution(command, envp_ptr, exit_status, builtin_create_subshell);
 	if (exit_status == ENOMEM)
@@ -107,6 +103,7 @@ int	pipeline_routine(t_list *pipeline, char ***envp_ptr, int exit_status, int bu
 //dup2 stdin et stdout ici avant pipeline
 int	pipeline_execution(t_list *pipeline, char ***envp_ptr, int exit_status)
 {
+	*m_exit_code() = 0;
 	m_stream_set();
 	if (dup2(m_stream()->saved_stdin_fd, 0) == -1)
 		return (errno);

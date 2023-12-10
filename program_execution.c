@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 06:50:05 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 22:54:48 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	*path_search(char *cmd_name, char **path)
 int	program_routine(char *path_name, char **cmd, char **envp)
 {
 	if (m_stream_use())
-		return (errno);
+		return (0);
 	if (execve(path_name, cmd, envp) == -1)
 		perror("execve");
 	return (errno);
@@ -81,19 +81,19 @@ int	program_execution(char **cmd, char **envp)
 
 	path_name = path_search(cmd[0], path_split(envp));
 	if (path_name == NULL)
-		return (errno);
+		return (0);
 	pid = fork();
 	if (pid < 0)
-		return (errno);
+		return (0);
 	else if (pid == 0)
 		exit(program_routine(path_name, cmd, envp));
-	if (m_stream()->input != -1)
-		close(m_stream()->input);
-	if (m_stream()->previous_output != -1)
-		close(m_stream()->previous_output);
+	if (m_stream()->input != -1 && close(m_stream()->input))
+		return (0);
+	if (m_stream()->previous_output != -1 && close(m_stream()->previous_output))
+		return (0);
 	waitpid(pid, &wait_status, 0);
 	if (WIFEXITED(wait_status))
-		return (WEXITSTATUS(wait_status));
+		return (0);
 	free(path_name);
-	return (errno);
+	return (1);
 }

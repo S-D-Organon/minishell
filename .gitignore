@@ -2,3 +2,4 @@
 a.out
 .*
 !.gitignore
+test_file2

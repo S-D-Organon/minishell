@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 06:51:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 23:02:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,20 @@ t_list	*skip_group(t_list *token)
 		token = token->next;
 	}
 	return (next_list_operator(token));
+}
+
+t_list	*and_skip(t_list *token)
+{
+	while (token != NULL && is_and(token->content))
+		token = skip_group(token);
+	return (token);
+}
+
+t_list *or_skip(t_list *token)
+{
+	while (token != NULL && is_or(token->content))
+		token = skip_group(token);
+	return (token);
 }
 
 t_list	*next_pipeline(t_list *token)
@@ -81,15 +95,15 @@ int	execution(t_list *token, char ***envp_ptr, int exit_status)
 		return (errno);
 	exit_status = pipeline_execution(pipeline, envp_ptr, 0);
 	ft_lstclear(&pipeline, &free);
-	if (exit_status == ENOMEM)
-		return (exit_status);
+	if (errno == ENOMEM)
+		return (errno);
 	token = next_list_operator(token);
 	if (token == NULL)
 		return (exit_status);
-	if (is_and(token->content) && exit_status)
-		token = skip_group(token);
-	else if (is_or(token->content) && !exit_status)
-		token = skip_group(token);
+	if (is_and(token->content) && *m_exit_code())
+		token = and_skip(token);
+	else if (is_or(token->content) && !*m_exit_code())
+		token = or_skip(token);
 	if (token == NULL)
 		return (exit_status);
 	return (execution(token->next, envp_ptr, exit_status));

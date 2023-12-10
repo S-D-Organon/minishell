@@ -63,12 +63,9 @@ t_stream	*test_stream(void)
 
 int	main(int argc, char *argv[], char **envp)
 {
-	int	saved_fd;
+	int	fd[2];
 
-	saved_fd = dup(1);
-	dup2(saved_fd, 1);
-	dup2(saved_fd, 1);
-	dup2(saved_fd, 1);
-	dup2(saved_fd, 1);
-	printf("coucou");
+	pipe(fd);
+	close(fd[0]);
+	printf("%d\n", fd[0]);
 }
