@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 04:58:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 06:51:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_list	*skip_group(t_list *token)
 {
 	int	left_bracket_count;
 
+	token = token->next;
 	left_bracket_count = 0;
 	while (token != NULL && is_left_bracket(token->content))
 	{
@@ -89,5 +90,7 @@ int	execution(t_list *token, char ***envp_ptr, int exit_status)
 		token = skip_group(token);
 	else if (is_or(token->content) && !exit_status)
 		token = skip_group(token);
+	if (token == NULL)
+		return (exit_status);
 	return (execution(token->next, envp_ptr, exit_status));
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 20:27:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 05:26:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 06:38:23 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	is_and(char *str)
 {
 	if (str == NULL)
 		return (0);
-	if (!ft_strncmp("&&", str, -1))
+	if (!ft_strncmp("&&", str, ft_strlen(str)))
 		return (1);
 	return (0);
 }
@@ -149,7 +149,7 @@ int	is_or(char *str)
 {
 	if (str == NULL)
 		return (0);
-	if (!ft_strncmp("||", str, -1))
+	if (!ft_strncmp("||", str, ft_strlen(str)))
 		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 05:41:40 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/10 06:50:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,9 @@ char	**path_split(char **envp)
 void	command_not_found(char *cmd_name)
 {
 	*m_exit_code() = 127;
-	ft_putstr_fd(ERROR_PREFIX, 2);
 	ft_putstr_fd(cmd_name, 2);
 	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(errno), 2);
+	ft_putendl_fd("Command not found", 2);
 }
 
 char	*path_search(char *cmd_name, char **path)
