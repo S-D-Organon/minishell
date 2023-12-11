@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 22:01:09 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/11 17:21:07 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,26 @@ int	input_redirect(char *file_name)
 int	here_doc(char *delimiter)
 {
 }
+*/
 
 int	output_redirect(char *file_name)
 {
+	int	fd;
+
+	fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, O_CREAT_PERMISSIONS);
+	if (fd < 0)
+		return (errno);
+	m_stream()->output = fd;
+	return (0);
 }
 
 int	output_redirect_append(char *file_name)
 {
+	int	fd;
+
+	fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, O_CREAT_PERMISSIONS);
+	if (fd < 0)
+		return (errno);
+	m_stream()->output = fd;
+	return (0);
 }
-*/

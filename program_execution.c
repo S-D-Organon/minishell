@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 22:54:48 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/11 17:39:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	program_routine(char *path_name, char **cmd, char **envp)
 {
 	if (m_stream_use())
 		return (0);
-	if (execve(path_name, cmd, envp) == -1)
+	if (cmd[0] != NULL && execve(path_name, cmd, envp) == -1)
 		perror("execve");
 	return (errno);
 }
@@ -79,9 +79,12 @@ int	program_execution(char **cmd, char **envp)
 	char	*path_name;
 	int		wait_status;
 
-	path_name = path_search(cmd[0], path_split(envp));
-	if (path_name == NULL)
-		return (0);
+	if (cmd[0] != NULL)
+	{
+		path_name = path_search(cmd[0], path_split(envp));
+		if (path_name == NULL)
+			return (0);
+	}
 	pid = fork();
 	if (pid < 0)
 		return (0);

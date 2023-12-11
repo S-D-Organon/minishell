@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 04:11:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/11 17:09:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <libft.h>
 # define ERROR_PREFIX "minishell: "
 # define PROMPT "minishell> "
+# define O_CREAT_PERMISSIONS S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH
 
 typedef struct s_stream
 {
