@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:18:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/11 17:10:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/11 18:34:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,8 @@ int	m_stream_redirect(t_list *command)
 	{
 		if (!ft_strncmp("<", command->content, -1) && input_redirect(command->next->content))
 			return (errno);
-		/*
 		if (!ft_strncmp("<<", command->content, -1) && here_doc(command->next->content))
 			return (errno);
-		*/
 		if (!ft_strncmp(">", command->content, -1) && output_redirect(command->next->content))
 			return (errno);
 		if (!ft_strncmp(">>", command->content, -1) && output_redirect_append(command->next->content))
