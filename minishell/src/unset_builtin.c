@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:33:59 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/11/30 16:41:58 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:01:14 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,31 +71,31 @@ char	**ft_realloc(char **env, int change)
 }
 
 
-void	unset_builtin(char **arg, char ***env)
+int	unset_builtin(char **arg, char ***env)
 {
 	int		i;
 	int		j;
 
 	i = 0;
 	if (arg[0] == NULL)
-		return ;
+		return (errno);
 	if (arg[0][0] == '-')
 	{
 		ft_putstr_fd("minishell: unset does not take any option.\n", 1);
-		return ;
+		return (errno);
 	}
 	while (arg[i])
 	{
-		j = 0;
-		while ((*env)[j])
+		j = -1;
+		while ((*env)[++j])
 		{
 			if (ft_checkexist(arg[i], (*env)[j]) == 1)
 			{
 				*env = ft_realloc(*env, j);
 				break ;
 			}
-			j++;
 		}
 		i++;
 	}
+	return (errno);
 }

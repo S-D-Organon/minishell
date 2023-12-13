@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/07 00:06:27 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:03:23 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,19 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_chr(char *str, char c);
 char	*ft_getcwd(char *env, char *pwd, char *choose);
 //pwd_builtin.c
-void	pwd_builtin(char **arg, char ***env);
+int	pwd_builtin(char **arg, char ***env);
 //echo_builtin.c
-void	echo_builtin(char **arg, char ***env);
+int	echo_builtin(char **arg, char ***env);
 //cd_builtin.c
-void	cd_builtin(char **arg, char ***env);
+int	cd_builtin(char **arg, char ***env);
 //env_builtin.c
-void	env_builtin(char **arg, char ***env);
+int	env_builtin(char **arg, char ***env);
 //exit_builtin.c
 void	exit_builtin(char **arg, char ***env);
 //export_builtin.c
 void	export_builtin(char **arg, char ***env);
-//signals.c
-void	ft_signals(int sig, t_data *data);
 //unset
-void	unset_builtin(char **arg, char ***env);
+int	unset_builtin(char **arg, char ***env);
 //reverse_split
 char	*ft_reverse_split(char **tab);
 //sort_env

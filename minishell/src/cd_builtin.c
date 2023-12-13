@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/07 00:06:07 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:34:06 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ char	**changeenvdir(char **env, int i, char *pwd)
 	return (env);
 }
 
-void	cd_builtin(char **arg, char ***env)
+int	cd_builtin(char **arg, char ***env)
 {
 	int		i;
 	char	pwd[PATH_MAX];
 
 	i = 0;
+	if ((*env) == NULL)
+		return (errno);
 	if (arg[0] == NULL || ft_strcmp(arg[0], "~") == 0)
 		(*env) = cd_home((*env), i, pwd);
 	else if (arg[1] != NULL)
@@ -86,4 +88,5 @@ void	cd_builtin(char **arg, char ***env)
 				changeenvdir((*env), i, pwd);
 		}
 	}
+	return (errno);
 }

@@ -6,13 +6,13 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:22:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 17:01:49 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:59:10 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	echo_builtin(char **arg, char ***env)
+int	echo_builtin(char **arg, char ***env)
 {
 	int	i;
 
@@ -30,7 +30,8 @@ void	echo_builtin(char **arg, char ***env)
 		}
 		printf("%s", arg[i]);
 		if (ft_strcmp(arg[0], "-n") == 0)
-			return ;
+			return (errno);
 	}
 	printf("\n");
+	return (errno);
 }

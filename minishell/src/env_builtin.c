@@ -6,13 +6,12 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:36:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 17:46:59 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/11 09:59:26 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-void	env_builtin(char **arg, char ***env)
+int	env_builtin(char **arg, char ***env)
 {
 	int	i;
 
@@ -20,11 +19,12 @@ void	env_builtin(char **arg, char ***env)
 	if (arg[0] != NULL)
 	{
 		ft_printf("no args needed\n");
-		return ;
+		return (errno);
 	}
 	while ((*env)[i])
 	{
 		ft_printf("%s\n", (*env)[i]);
 		i++;
 	}
+	return (errno);
 }
