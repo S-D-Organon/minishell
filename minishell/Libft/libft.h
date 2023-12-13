@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/04 11:07:44 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/07/13 11:23:10 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:30:17 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
-int		ft_isalnum(int c);
+int		ft_isalnum(char c);
 int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);

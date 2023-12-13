@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:59:52 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 23:59:54 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/13 20:59:04 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,54 +22,52 @@ int	len_env(char **env)
 	return (i);
 }
 
-char	**env_dup(char **newenv, char **env, int *i)
+char	**env_dup(char **newenv, char **env)
 {
-	while (env[*i])
+	int	i;
+
+	i = 0;
+	while (env[i])
 	{
-		newenv[*i] = ft_strdup(env[*i]);
-		(*i)++;
+		newenv[i] = ft_strdup(env[i]);
+		i++;
 	}
+	newenv[i] = NULL;
 	return (newenv);
 }
 
-char	**ft_sort(char **newenv, char *tmp, int *i)
+char	**ft_sort(char **newenv)
 {
+	int	i;
 	int	j;
+	char *tmp;
 
-	j = *i + 1;
-	while (newenv[*i + 1])
+	i = 0;
+	j = i + 1;
+	while (newenv[i + 1])
 	{
-		j = *i + 1;
+		j = i + 1;
 		while (newenv[j])
 		{
-			if (ft_strcmp(newenv[*i], newenv[j]) > 0)
+			if (ft_strcmp(newenv[i], newenv[j]) > 0)
 			{
 				tmp = newenv[j];
-				newenv[j] = newenv[*i];
-				newenv[*i] = tmp;
+				newenv[j] = newenv[i];
+				newenv[i] = tmp;
 			}
 			j++;
 		}
-		(*i)++;
+		i++;
 	}
-	newenv[*i - 1] = newenv[*i];
-	newenv[*i] = NULL;
 	return (newenv);
 }
 
 char	**sort_env(char **env)
 {
-	int		i;
-	char	*tmp;
 	char	**newenv;
 
-	tmp = NULL;
-	i = len_env(env);
-	newenv = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	newenv = env_dup(newenv, env, &i);
-	newenv[i] = NULL;
-	i = 0;
-	newenv = ft_sort(newenv, tmp, &i);
+	newenv = malloc(sizeof(char *) * (len_env(env) + 1));
+	newenv = env_dup(newenv, env);
+	newenv = ft_sort(newenv);
 	return (newenv);
-}
+} 

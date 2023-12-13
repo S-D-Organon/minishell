@@ -5,7 +5,7 @@ OBJS 	= ${SRCS:.c=.o}
 HEADER	= -Iinclude
 
 CC 		= gcc
-CFLAGS 	= -Wall -Wextra -Werror
+CFLAGS 	= -Wall -Wextra -Werror -g
 
 .c.o:		%.o : %.c
 					@gcc ${CFLAGS} ${HEADER}-I/usr/include -c $< -o $(<:.c=.o)

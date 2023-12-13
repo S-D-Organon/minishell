@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/11 10:03:23 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:28:48 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,5 @@ int	unset_builtin(char **arg, char ***env);
 char	*ft_reverse_split(char **tab);
 //sort_env
 char	**sort_env(char **env);
+int	ft_check_env(char **env, char *arg);
 #endif

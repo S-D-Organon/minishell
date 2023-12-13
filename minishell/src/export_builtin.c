@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/13 17:21:09 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/13 21:46:37 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,37 @@ int	firstcharalpha(char *arg)
 {
 	if (arg == NULL)
 		return (2);
-	if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z') || arg[0] == '-')
+	if ((arg[0] >= 'a' && arg[0] <= 'z') || (arg[0] >= 'A' && arg[0] <= 'Z'))
 		return (0);
 	return (1);
 }
 
-int	ft_tiret(char **arg)
+int	ft_isalnumequal(char *str)
 {
-	if (arg[0] == NULL)
-		return (2);
-	if (ft_strcmp(arg[0], "-") == 0 && arg[1] == NULL)
-		return (0);
-	return (1);
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if (ft_isalnum(str[i]) == 1)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
+int	ft_isalphatillequal(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
+		if ((str[i] <= 'a' || str[i] >= 'z') && (str[i] <= 'A' || str[i] >= 'Z'))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 int findindex(char **arg)
@@ -46,7 +65,7 @@ int findindex(char **arg)
 	return (j);
 }
 
-int	*iskeywithout(char **arg)
+int	*iskeywithout(char **env, char **arg)
 {
 	int *index;
 	int	i;
@@ -60,7 +79,7 @@ int	*iskeywithout(char **arg)
 	j = 0;
 	while (arg[i])
 	{
-		if (ft_chr(arg[i], '=') > 1 && arg[i][ft_chr(arg[i], '=')] != '\0')
+		if (ft_chr(arg[i], '=') > 1 && arg[i][ft_chr(arg[i], '=')] != '\0' && ft_check_env(env, arg[i]) == 1)
 		{
 			index[j] = i;
 			j++;
@@ -193,17 +212,27 @@ int	isinintpointer(int i, int *index, int size)
 	}
 	return (0);
 }
+/*
+void	tabstepone(char ***tab, int *k)
+{
+	char **tmp;
 
-void	inittab(char ***tab, char **arg, int *index)
+	tmp = malloc(sizeof(char *) * (ft_lentab((*tab)) + 1));
+	while ()
+}
+*/
+void	inittab(char ***tab, char **env, char **arg, int *index)
 {
 	int	i;
 	int	k;
 
 	i = 0;
 	k = 0;
+	//if (!(*tab))
+	//	tabstepone(tab, &k);
 	while (arg[i])
 	{
-		if (isinintpointer(i, index, findindex(arg)) == 0 && arg[i][0] != '=')
+		if (isinintpointer(i, index, findindex(arg)) == 0 && arg[i][0] != '=' && ft_check_env(env, arg[i]) == 1)
 		{
 			(*tab)[k] = ft_strdup(arg[i]);
 			k++;
@@ -302,6 +331,22 @@ char	***splitarg(char **arg, int *index)
 	return (split);
 }
 
+char	***splitenv(char **env)
+{
+	char ***split;
+	int	i;
+
+	split = malloc(sizeof(char **) * (ft_lentab(env) + 1));
+	i = 0;
+	while (env[i])
+	{
+		split[i] = ft_split(env[i], '=');
+		i++;
+	}
+	split[i] = NULL;
+	return (split);
+}
+
 int	checksubstr(char *s1, char *s2)
 {
 	int i;
@@ -323,6 +368,51 @@ int	checksubstr(char *s1, char *s2)
 	return (1);
 }
 
+void	freetab3d(char ***str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		freetab(str[i]);
+		i++;
+	}
+	free(str);
+}
+
+int	ft_strcmpplus(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2 [i] && s1[i] == s2[i])
+		i++;
+	if (s1[i] == '=' || s2[i] == '=')
+		return (0);
+	return (1);
+}
+
+int	ft_check_env(char **env, char *arg)
+{
+	char ***str;
+	int	i;
+
+	str = splitenv(env);
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strcmp(str[i][0], arg) == 0 || ft_strcmpplus(str[i][0], arg) == 0)
+		{
+			freetab3d(str);
+			return (0);
+		}
+		i++;
+	}
+	freetab3d(str);
+	return (1);
+}
+
 void	changeenv(char ***env, char **arg, int *index)
 {
 	char ***str;
@@ -339,17 +429,17 @@ void	changeenv(char ***env, char **arg, int *index)
 		{
 			if (checksubstr(str[k][0], (*env)[i]) == 0)
 			{
-				free((*env)[i]);
 				(*env)[i] = ft_strjoin(str[k][0], "=");
 				tmp = ft_strdup((*env)[i]);
-				free((*env)[i]);
 				(*env)[i] = ft_strjoin(tmp, str[k][1]);
 				free(tmp);
+				tmp = NULL;
 			}
 			k++;
 		}
 		i++;
 	}
+	freetab3d(str);
 }
 
 void	printexport(char ***env, char **tab)
@@ -358,14 +448,11 @@ void	printexport(char ***env, char **tab)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	sort = malloc(sizeof(char *) * (ft_lentab((*env)) + ft_lentab(tab) + 1));
-	while ((*env)[i])
-	{
+	while ((*env)[++i])
 		sort[i] = ft_strdup((*env)[i]);
-		i++;
-	}
 	while (tab[j])
 	{
 		sort[i] = ft_strdup(tab[j]);
@@ -382,18 +469,39 @@ void	printexport(char ***env, char **tab)
 	}
 }
 
+int	ft_checkinput(char **arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+	{
+		if (ft_isalnumequal(arg[i]) == 1 || firstcharalpha(arg[i]) == 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	export_builtin(char **arg, char ***env)
 {
 	int *index;
-	char **tab;
+	static char **tab;
 	static int len;
 
+	if (ft_checkinput(arg) == 1)
+	{
+		printf("not a valid arg\n");
+		return ;
+	}
 	len += ft_lentab(arg) - findindex(arg);
-	index = iskeywithout(arg);
+	printf("%d\n", len);
+	index = iskeywithout((*env), arg);
 	tab = malloc(sizeof(char *) * (len + 1));
-	inittab(&tab, arg, index);
+	inittab(&tab, (*env), arg, index);
 	checktab(&tab);
 	changeenv(env, arg, index);
 	checkenvarg(env, arg, index);
-	printexport(env, tab);
+	//printexport(env, tab);
+	free(index);
 }
