@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/13 06:40:47 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 21:39:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,13 @@ int	output_redirect(char *file_name);
 int	output_redirect_append(char *file_name);
 
 //expansion
-t_list	*redirection_expansion(char *word, char **envp);
+t_list	*redirection_expansion(t_list *pipeline, char **envp);
 t_list	*classic_expansion(char *word, char **envp);
 
 //parameter expansion
 char	*parameter_expansion(char *word, char **envp);
+
+//word split
+t_list *word_split(char *word);
 
 #endif
