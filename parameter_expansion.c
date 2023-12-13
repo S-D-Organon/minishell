@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 04:04:28 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/13 07:15:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 23:07:52 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parameter_len(char *str)
 		len = 1;
 	while (str[len])
 	{
-		if (str[len] == '*' || str[len] == '$' || str[len] == '?')
+		if (str[len] == '*' || str[len] == '$' || str[len] == '?' || str[len] == '"')
 			break ;
 		len++;
 	}
