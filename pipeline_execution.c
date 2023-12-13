@@ -6,43 +6,49 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 22:52:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 07:26:18 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	m_stream_set(void)
+void	remove_null_content(t_list **lst)
 {
-	m_stream()->input = -1;
-	m_stream()->output = -1;
-	m_stream()->next_input = -1;
-	m_stream()->previous_output = -1;
+	t_list	*i;
+
+	i = *lst;
+	while (i != NULL)
+	{
+		if (i->content == NULL)
+			delete_node(lst, i);
+		i = i->next;
+	}
 }
 
 t_list	*next_expanded_command(t_list *pipeline, char **envp)
 {
 	t_list	*command;
 	t_list	*new;
-	char	*content;
 
 	command = NULL;
 	while (pipeline != NULL && !is_pipe(pipeline->content))
 	{
-		content = content_expand(pipeline->content, envp);
-		if (content == NULL)
-			break ;
-		new = ft_lstnew(content);
+		if (is_redirection_operator(pipeline->content))
+		{
+			new = redirection_expansion(pipeline->next->content, envp);
+			pipeline = pipeline->next;
+		}
+		else
+			new = classic_expansion(pipeline->content, envp);
 		if (new == NULL)
 		{
-			free(content);
-			break ;
+			ft_lstclear(&command, &free);
+			return (NULL);
 		}
 		ft_lstadd_back(&command, new);
 		pipeline = pipeline->next;
 	}
-	if (errno == ENOMEM)
-		ft_lstclear(&command, &free);
+	remove_null_content(&command);
 	return (command);
 }
 
@@ -51,27 +57,6 @@ t_list	*next_pipe(t_list *pipeline)
 	while (pipeline != NULL && !is_pipe(pipeline->content))
 		pipeline = pipeline->next;
 	return (pipeline);
-}
-
-int	pipe_set(int last)
-{
-	static int	pipe_fd[2] = {-1, -1};
-
-	m_stream()->input = pipe_fd[0];
-	m_stream()->previous_output = pipe_fd[1];
-	if (last)
-	{
-		m_stream()->output = m_stream()->saved_stdout_fd;
-		m_stream()->next_input = -1;
-		pipe_fd[0] = -1;
-		pipe_fd[1] = -1;
-		return (0);
-	}
-	if (pipe(pipe_fd))
-		return (errno);
-	m_stream()->output = pipe_fd[1];
-	m_stream()->next_input = pipe_fd[0];
-	return (0);
 }
 
 int	pipeline_routine(t_list *pipeline, char ***envp_ptr, int exit_status, int builtin_create_subshell)

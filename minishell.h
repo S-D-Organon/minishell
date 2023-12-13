@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/11 18:15:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 06:40:47 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef struct s_stream
 
 //array free
 void	array_free(void *root, unsigned int dimension);
+
+//delete node
+void	delete_node(t_list **list, t_list *node);
+
+//str merge
+char	*str_merge(char *s1, char *s2);
 
 //tokenizer
 t_list	*tokenizer(char *input);
@@ -92,7 +98,7 @@ int	execution(t_list *token, char ***envp_ptr, int exit_status);
 int	pipeline_execution(t_list *pipeline, char ***envp_ptr, int exit_status);
 
 //command execution
-int	m_stream_use(void);
+t_list	*next_redirection_operator(t_list *command);
 int	command_execution(t_list *command, char ***envp_ptr, int exit_status, int builtin_create_subshell);
 
 //builtin execution
@@ -101,6 +107,12 @@ int	builtin_execution(char **cmd, char ***envp_ptr, int builtin_create_subshell)
 //program execution
 int	program_execution(char **cmd, char **envp);
 
+//stream
+int		m_stream_use(void);
+int		m_stream_redirect(t_list *command);
+int		pipe_set(int last);
+void	m_stream_set(void);
+
 //redirection
 int	input_redirect(char *file_name);
 int	here_doc(char *delimiter);
@@ -108,6 +120,10 @@ int	output_redirect(char *file_name);
 int	output_redirect_append(char *file_name);
 
 //expansion
-char	*content_expand(char *content, char **envp);
+t_list	*redirection_expansion(char *word, char **envp);
+t_list	*classic_expansion(char *word, char **envp);
+
+//parameter expansion
+char	*parameter_expansion(char *word, char **envp);
 
 #endif

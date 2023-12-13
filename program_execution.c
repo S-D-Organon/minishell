@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/11 17:39:28 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 06:17:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,16 @@ void	command_not_found(char *cmd_name)
 char	*path_search(char *cmd_name, char **path)
 {
 	char	*path_name;
-	char	*tmp;
 	int		i;
 
-	if (is_executable(cmd_name))
-		return (ft_strdup(cmd_name));
 	if (path == NULL)
 		return (NULL);
+	if (is_executable(cmd_name))
+		return (ft_strdup(cmd_name));
 	i = 0;
 	while (path[i] != NULL)
 	{
-		tmp = ft_strjoin(path[i], "/");
-		if (tmp == NULL)
-			break ;
-		path_name = ft_strjoin(tmp, cmd_name);
-		free(tmp);
+		path_name = str_merge(ft_strjoin(path[i], "/"), cmd_name);
 		if (path_name == NULL)
 			break ;
 		if (is_executable(path_name))

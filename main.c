@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 21:33:05 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 07:23:20 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ int	minishell_loop(char ***envp_ptr)
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	(void)argc;
-	(void)argv;
-	if (envp == NULL)
+	if (envp == NULL || argc != 1)
 		return (EXIT_FAILURE);
 	return (minishell_loop(&envp));
 }

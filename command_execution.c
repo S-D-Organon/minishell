@@ -6,49 +6,17 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:18:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/11 18:34:01 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/13 05:57:09 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	m_stream_use(void)
-{
-	if (m_stream()->next_input != -1 && close(m_stream()->next_input))
-		return (errno);
-	if (m_stream()->previous_output != -1 && close(m_stream()->previous_output))
-		return (errno);
-	if (m_stream()->input != -1 && dup2(m_stream()->input, 0) == -1)
-		return (errno);
-	if (m_stream()->output != -1  && dup2(m_stream()->output, 1) == -1)
-		return (errno);
-	return (0);
-}
 
 t_list	*next_redirection_operator(t_list *command)
 {
 	while (command != NULL && !is_redirection_operator(command->content))
 		command = command->next;
 	return (command);
-}
-
-int	m_stream_redirect(t_list *command)
-{
-	command = next_redirection_operator(command);
-	while (command != NULL)
-	{
-		if (!ft_strncmp("<", command->content, -1) && input_redirect(command->next->content))
-			return (errno);
-		if (!ft_strncmp("<<", command->content, -1) && here_doc(command->next->content))
-			return (errno);
-		if (!ft_strncmp(">", command->content, -1) && output_redirect(command->next->content))
-			return (errno);
-		if (!ft_strncmp(">>", command->content, -1) && output_redirect_append(command->next->content))
-			return (errno);
-		command = command->next;
-		command = next_redirection_operator(command);
-	}
-	return (0);
 }
 
 int	command_len(t_list *command)
@@ -59,12 +27,10 @@ int	command_len(t_list *command)
 	while (command != NULL)
 	{
 		if (!is_redirection_operator(command->content))
-		{
 			len++;
-			command = command->next;
-		}
 		else
-			command = command->next->next;
+			command = command->next;
+		command = command->next;
 	}
 	return (len);
 }
@@ -88,11 +54,11 @@ char	**execve_command(t_list *command)
 				free(execve_command);
 				return (NULL);
 			}
-			command = command->next;
 			i++;
 		}
 		else
-			command = command->next->next;
+			command = command->next;
+		command = command->next;
 	}
 	execve_command[i] = NULL;
 	return (execve_command);

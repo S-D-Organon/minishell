@@ -63,9 +63,13 @@ t_stream	*test_stream(void)
 
 int	main(int argc, char *argv[], char **envp)
 {
-	int	fd[2];
+	int	i;
 
-	pipe(fd);
-	close(fd[0]);
-	printf("%d\n", fd[0]);
+	printf("%d\n", argc);
+	i = 0;
+	while (argv[i])
+	{
+		printf("%s\n", argv[i]);
+		i++;
+	}
 }

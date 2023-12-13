@@ -16,5 +16,8 @@ void	delete_node(t_list **list, t_list *node)
 			i = i->next;
 		i->next = node->next;
 	}
-	ft_lstdelone(node, free);
+	if (node->content != NULL)
+		ft_lstdelone(node, free);
+	else
+		free(node);
 }
