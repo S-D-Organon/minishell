@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/13 21:28:48 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 01:13:31 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int	echo_builtin(char **arg, char ***env);
 //cd_builtin.c
 int	cd_builtin(char **arg, char ***env);
 //env_builtin.c
-int	env_builtin(char **arg, char ***env);
+void	env_builtin(char **arg, char ***env);
 //exit_builtin.c
 void	exit_builtin(char **arg, char ***env);
 //export_builtin.c
-void	export_builtin(char **arg, char ***env);
+int	export_builtin(char **arg, char ***env);
 //unset
 int	unset_builtin(char **arg, char ***env);
 //reverse_split
@@ -66,4 +66,5 @@ char	*ft_reverse_split(char **tab);
 //sort_env
 char	**sort_env(char **env);
 int	ft_check_env(char **env, char *arg);
+char	**ft_realloc(char **env, int change);
 #endif

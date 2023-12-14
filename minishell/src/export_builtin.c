@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/13 21:46:37 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 01:43:28 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	*iskeywithout(char **env, char **arg)
 	j = 0;
 	while (arg[i])
 	{
-		if (ft_chr(arg[i], '=') > 1 && arg[i][ft_chr(arg[i], '=')] != '\0' && ft_check_env(env, arg[i]) == 1)
+		if (ft_chr(arg[i], '=') > 1 && arg[i][ft_chr(arg[i], '=')] != '\0' && \
+		ft_check_env(env, arg[i]) == 0)
 		{
 			index[j] = i;
 			j++;
@@ -153,25 +154,50 @@ char	**strplusenv(char *arg, char **env)
 
 
 	str = ft_reverse_split(env);
+	if (!str)
+		return (NULL);
 	if (arg != NULL)
 	{
 		tmp = ft_strdup(str);
+		if (!tmp)
+		{
+			free(str);
+			return (NULL);
+		}
 		free(str);
 		str = ft_strjoin(tmp, "\n");
+		if (!str)
+		{
+			free(tmp);
+			return (NULL);
+		}
 		free(tmp);
 		tmp = ft_strdup(str);
+		if (!tmp)
+		{
+			free(str);
+			return (NULL);
+		}
 		free(str);
 		str = ft_strjoin(tmp, arg);
+		if (!str)
+		{
+			free(str);
+			return (NULL);
+		}
 		free(tmp);
 	}
 	env = ft_split(str, '\n');
+	if (!env)
+	{
+		free(str);
+		return (NULL);
+	}
 	free(str);
-	//printf("%d\n", ft_lentab(env));
-	//printf("%s\n", env[25]);
 	return (env);
 }
 
-void	checkenvarg(char ***env, char **arg, int *index)
+int	checkenvarg(char ***env, char **arg, int *index)
 {
 	int	i;
 	int	j;
@@ -182,10 +208,8 @@ void	checkenvarg(char ***env, char **arg, int *index)
 		j = 0;
 		while ((*env)[j])
 		{
-			//printf("%s, %s\n", env[j], arg[index[i]]);
 			if (checkcmp((*env)[j], arg[index[i]]) == 0)
 			{
-			//	printf("stop\n");
 				break;
 			}
 			j++;
@@ -193,10 +217,12 @@ void	checkenvarg(char ***env, char **arg, int *index)
 		if (j == ft_lentab((*env)))
 		{
 			(*env) = strplusenv(arg[index[i]], (*env));
-			//printf("coucou");
+			if (!(*env))
+				return (1);
 		}
 		i++;
 	}
+	return (0);
 }
 
 int	isinintpointer(int i, int *index, int size)
@@ -212,29 +238,22 @@ int	isinintpointer(int i, int *index, int size)
 	}
 	return (0);
 }
-/*
-void	tabstepone(char ***tab, int *k)
-{
-	char **tmp;
 
-	tmp = malloc(sizeof(char *) * (ft_lentab((*tab)) + 1));
-	while ()
-}
-*/
-void	inittab(char ***tab, char **env, char **arg, int *index)
+int	inittab(char ***tab, char **env, char **arg, int *index)
 {
 	int	i;
 	int	k;
 
 	i = 0;
 	k = 0;
-	//if (!(*tab))
-	//	tabstepone(tab, &k);
 	while (arg[i])
 	{
-		if (isinintpointer(i, index, findindex(arg)) == 0 && arg[i][0] != '=' && ft_check_env(env, arg[i]) == 1)
+		if (isinintpointer(i, index, findindex(arg)) == 0 && arg[i][0] != '=' \
+		&& ft_check_env(env, arg[i]) == 0)
 		{
 			(*tab)[k] = ft_strdup(arg[i]);
+			if (!(*tab)[k])
+				return (1);
 			k++;
 		}
 		i++;
@@ -244,6 +263,7 @@ void	inittab(char ***tab, char **env, char **arg, int *index)
 		(*tab)[k] = NULL;
 		k++;
 	}
+	return (0);
 }
 
 int	countempty(char **tab)
@@ -271,11 +291,15 @@ char	**ft_emptytab(char **tab)
 	i = 0;
 	j = 0;
 	tmp = malloc(sizeof(char *) * (ft_lentab(tab) - countempty(tab) + 1));
+	if (!tmp)
+		return (NULL);
 	while (tab[i])
 	{
 		if (ft_strcmp(tab[i], "") != 0)
 		{
 			tmp[j] = ft_strdup(tab[i]);
+			if (!tmp[j])
+				return (NULL);
 			j++;
 		}
 		i++;
@@ -285,7 +309,7 @@ char	**ft_emptytab(char **tab)
 	return (tmp);
 }
 
-void	checktab(char ***tab)
+int	checktab(char ***tab)
 {
 	int	i;
 	int	j;
@@ -301,12 +325,17 @@ void	checktab(char ***tab)
 			{
 				free((*tab)[j]);
 				(*tab)[j] = ft_strdup("");
+				if (!(*tab)[j])
+					return (1);
 			}
 			j++;
 		}
 		i++;
 	}
 	(*tab) = ft_emptytab((*tab));
+	if (!(*tab))
+		return (1);
+	return (0);
 }
 
 char	***splitarg(char **arg, int *index)
@@ -399,21 +428,23 @@ int	ft_check_env(char **env, char *arg)
 	int	i;
 
 	str = splitenv(env);
+	if (!str)
+		return (1);
 	i = 0;
 	while (str[i])
 	{
 		if (ft_strcmp(str[i][0], arg) == 0 || ft_strcmpplus(str[i][0], arg) == 0)
 		{
 			freetab3d(str);
-			return (0);
+			return (1);
 		}
 		i++;
 	}
 	freetab3d(str);
-	return (1);
+	return (0);
 }
 
-void	changeenv(char ***env, char **arg, int *index)
+int	changeenv(char ***env, char **arg, int *index)
 {
 	char ***str;
 	int	i;
@@ -422,6 +453,8 @@ void	changeenv(char ***env, char **arg, int *index)
 
 	i = 0;
 	str = splitarg(arg, index);
+	if (!str)
+		return (1);
 	while ((*env)[i])
 	{
 		k = 0;
@@ -430,8 +463,14 @@ void	changeenv(char ***env, char **arg, int *index)
 			if (checksubstr(str[k][0], (*env)[i]) == 0)
 			{
 				(*env)[i] = ft_strjoin(str[k][0], "=");
+				if (!(*env)[i])
+					return (1);
 				tmp = ft_strdup((*env)[i]);
+				if (!tmp)
+					return (1);
 				(*env)[i] = ft_strjoin(tmp, str[k][1]);
+				if (!(*env)[i])
+					return (1);
 				free(tmp);
 				tmp = NULL;
 			}
@@ -440,9 +479,30 @@ void	changeenv(char ***env, char **arg, int *index)
 		i++;
 	}
 	freetab3d(str);
+	return (0);
 }
 
-void	printexport(char ***env, char **tab)
+char **cpytab(char **sort)
+{
+	int	i;
+	char **new;
+
+	new = malloc(sizeof(char *) * (ft_lentab(sort) + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (sort[i])
+	{
+		new[i] = ft_strdup(sort[i]);
+		if (!new[i])
+			return (NULL);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+int	changeexport(char ***env, char **tab)
 {
 	char **sort;
 	int	i;
@@ -451,22 +511,100 @@ void	printexport(char ***env, char **tab)
 	i = -1;
 	j = 0;
 	sort = malloc(sizeof(char *) * (ft_lentab((*env)) + ft_lentab(tab) + 1));
+	if (!sort)
+		return (1);
 	while ((*env)[++i])
+	{
 		sort[i] = ft_strdup((*env)[i]);
+		if (!sort[i])
+			return (1);
+	}
 	while (tab[j])
 	{
 		sort[i] = ft_strdup(tab[j]);
+		if (!sort[i])
+			return (1);
 		i++;
 		j++;
 	}
 	sort[i] = NULL;
-	sort = sort_env(sort);
-	i = 0;
-	while (sort[i])
+	(*env) = cpytab(sort);
+	if (!(*env))
 	{
-		printf("%s\n", sort[i]);
+		free(sort);
+		return (1);
+	}
+	free(sort);
+	return (0);
+}
+
+int	lentillequallvt(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] != '=')
+	{
 		i++;
 	}
+	return (i);
+}
+
+int	ft_strcmpenv(char *s1, char *s2)
+{
+	int	i;
+
+	i = 0;
+	if (lentillequallvt(s1) != lentillequallvt(s2))
+		return (1);
+	while (i < lentillequallvt(s1))
+	{
+		if (s1[i] != s2[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	finalexport(char ***env)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while ((*env)[i])
+	{
+		j = i + 1;
+		while ((*env)[j])
+		{
+			if (ft_strcmpenv((*env)[i], (*env)[j]) == 0)
+			{
+				if (ft_chr((*env)[i], '=') == 0)
+					(*env) = ft_realloc((*env), i);
+				else
+					(*env) = ft_realloc((*env), j);
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+void	printexport(char ***env)
+{
+	int	i;
+	char **sort;
+
+	i = 0;
+	finalexport(env);
+	sort = cpytab((*env));
+	sort = sort_env(sort);
+	while (sort[i])
+	{
+		printf("declare x : %s\n", sort[i]);
+		i++;
+	}
+	free(sort);
 }
 
 int	ft_checkinput(char **arg)
@@ -483,25 +621,66 @@ int	ft_checkinput(char **arg)
 	return (0);
 }
 
-void	export_builtin(char **arg, char ***env)
+void	ft_equal(char **arg, char ***env)
+{
+	int	i;
+	int	j;
+	int	k;
+
+	i = -1;
+	while (arg[++i])
+	{
+		if (ft_chr(arg[i], '=') > 0)
+		{
+			j = -1;
+			while ((*env)[++j])
+			{
+				k = 0;
+				while ((*env)[j] && arg[i] && k < (int)ft_strlen(arg[i]))
+				{
+					if ((*env)[j][k] != arg[i][k])
+						break;
+					k++;
+				}
+				if (k == (int)ft_strlen(arg[i]) || k == (int)ft_strlen((*env)[j]))
+					(*env)[j] = arg[i];
+			}
+		}
+	}
+}
+
+int	export_builtin(char **arg, char ***env)
 {
 	int *index;
-	static char **tab;
-	static int len;
+	char **tab;
+	int len;
 
 	if (ft_checkinput(arg) == 1)
 	{
 		printf("not a valid arg\n");
-		return ;
+		return (0);
 	}
-	len += ft_lentab(arg) - findindex(arg);
-	printf("%d\n", len);
+	if (arg[0] == NULL)
+	{
+		printexport(env);
+		return (0);
+	}
+	ft_equal(arg, env);
+	len = ft_lentab(arg) - findindex(arg);
 	index = iskeywithout((*env), arg);
 	tab = malloc(sizeof(char *) * (len + 1));
-	inittab(&tab, (*env), arg, index);
-	checktab(&tab);
-	changeenv(env, arg, index);
-	checkenvarg(env, arg, index);
-	//printexport(env, tab);
+	if (!tab)
+	{
+		free(index);
+		return (1);
+	}
+	if (inittab(&tab, (*env), arg, index) == 1 || checktab(&tab) == 1 || \
+	changeenv(env, arg, index) == 1 \
+	|| checkenvarg(env, arg, index) == 1 || changeexport(env, tab) == 1)
+	{
+		free(index);
+		return (1);
+	}
 	free(index);
+	return (0);
 }
