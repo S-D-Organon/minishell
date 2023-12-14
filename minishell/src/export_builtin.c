@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 01:43:28 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 02:38:29 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ char	**strplusenv(char *arg, char **env)
 {
 	char	*tmp;
 	char	*str;
-
 
 	str = ft_reverse_split(env);
 	if (!str)
@@ -672,14 +671,16 @@ int	export_builtin(char **arg, char ***env)
 	if (!tab)
 	{
 		free(index);
-		return (1);
+		if (errno == ENOMEM)
+			return (1);
 	}
 	if (inittab(&tab, (*env), arg, index) == 1 || checktab(&tab) == 1 || \
 	changeenv(env, arg, index) == 1 \
 	|| checkenvarg(env, arg, index) == 1 || changeexport(env, tab) == 1)
 	{
 		free(index);
-		return (1);
+		if (errno == ENOMEM)
+			return (1);
 	}
 	free(index);
 	return (0);

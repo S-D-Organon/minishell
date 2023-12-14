@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:33:59 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/11 10:01:14 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 02:41:51 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	**ft_realloc(char **env, int change)
 	while (env[i])
 		i++;
 	temp = malloc(sizeof(char *) * i);
+	if (!temp)
+		return (NULL);
 	i = 0;
 	j = 0;
 	while (env[i])
@@ -78,7 +80,7 @@ int	unset_builtin(char **arg, char ***env)
 
 	i = 0;
 	if (arg[0] == NULL)
-		return (errno);
+		return (0);
 	if (arg[0][0] == '-')
 	{
 		ft_putstr_fd("minishell: unset does not take any option.\n", 1);
@@ -92,10 +94,15 @@ int	unset_builtin(char **arg, char ***env)
 			if (ft_checkexist(arg[i], (*env)[j]) == 1)
 			{
 				*env = ft_realloc(*env, j);
+				if (!(*env))
+				{
+					if (errno == ENOMEM)
+						return (1);
+				}
 				break ;
 			}
 		}
 		i++;
 	}
-	return (errno);
+	return (0);
 }

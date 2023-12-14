@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 01:13:31 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 01:50:23 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	echo_builtin(char **arg, char ***env);
 //cd_builtin.c
 int	cd_builtin(char **arg, char ***env);
 //env_builtin.c
-void	env_builtin(char **arg, char ***env);
+int	env_builtin(char **arg, char ***env);
 //exit_builtin.c
 void	exit_builtin(char **arg, char ***env);
 //export_builtin.c
