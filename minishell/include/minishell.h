@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 01:50:23 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 03:13:52 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ char	*ft_reverse_split(char **tab);
 //sort_env
 char	**sort_env(char **env);
 int	ft_check_env(char **env, char *arg);
+void	ft_signalnewline(int sig);
 char	**ft_realloc(char **env, int change);
 #endif

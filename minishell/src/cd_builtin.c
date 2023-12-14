@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/11 10:34:06 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 02:50:30 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,8 @@ int	ft_findpwd(char **env)
 char	**cd_home(char **env, int i, char *pwd)
 {
 	i = ft_findoldpwd(env);
-	free(env[i]);
 	env[i] = ft_getcwd(env[i], pwd, "OLDPWD=");
 	i = ft_findpwd(env);
-	free(env[i]);
 	chdir(getenv("HOME"));
 	env[i] = ft_getcwd(env[i], pwd, "PWD=");
 	return (env);
@@ -56,10 +54,8 @@ char	**cd_home(char **env, int i, char *pwd)
 char	**changeenvdir(char **env, int i, char *pwd)
 {
 	i = ft_findoldpwd(env);
-	free(env[i]);
 	env[i] = ft_strjoin("OLDPWD=", env[ft_findpwd(env)] + 4);
 	i = ft_findpwd(env);
-	free(env[i]);
 	env[i] = ft_getcwd(env[i], pwd, "PWD=");
 	return (env);
 }
@@ -71,7 +67,7 @@ int	cd_builtin(char **arg, char ***env)
 
 	i = 0;
 	if ((*env) == NULL)
-		return (errno);
+		return (0);
 	if (arg[0] == NULL || ft_strcmp(arg[0], "~") == 0)
 		(*env) = cd_home((*env), i, pwd);
 	else if (arg[1] != NULL)
@@ -88,5 +84,5 @@ int	cd_builtin(char **arg, char ***env)
 				changeenvdir((*env), i, pwd);
 		}
 	}
-	return (errno);
+	return (0);
 }

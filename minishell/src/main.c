@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 12:02:46 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 01:59:00 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/14 03:12:53 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ int	main(int ac, char **ag, char **env)
 	(void)ag;
 	data = malloc(sizeof(t_data));
 	ft_init_env(env, data);
+	signal(SIGINT, &ft_signalnewline);
 	while (1)
 	{
 		input = readline("minishell : ");
 		if (input != NULL && input[0] != '\0')
 		{
 			ft_init_args(data, input);
-			export_builtin(data->arg + 1, &env);
+			cd_builtin(data->arg + 1, &env);
 		}
 	}
 }
