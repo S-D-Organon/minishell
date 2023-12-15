@@ -21,6 +21,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <dirent.h>
 
 void	function_test(void);
 
@@ -65,6 +66,7 @@ int	main(int argc, char *argv[], char **envp)
 {
 	int	i;
 
+	printf("%d\n", strlen("\x1D"));
 	printf("%d\n", argc);
 	i = 0;
 	while (argv[i])

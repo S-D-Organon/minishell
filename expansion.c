@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/13 22:18:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/15 00:58:53 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,21 +63,19 @@ t_list	*classic_expansion(char *word, char **envp)
 	parameter_expanded = parameter_expansion(word, envp);
 	if (parameter_expanded == NULL)
 		return (NULL);
-	printf("%s\n", parameter_expanded);
 	word_splited = word_split(parameter_expanded);
 	free(parameter_expanded);
 	if (word_splited == NULL)
 		return (NULL);
-	token_print(word_splited);
+	return (word_splited);
 	/*
-	filename_expanded = filename_expansion(word_splited, envp);
-	ft_lstclear(word_splited, &free);
+	filename_expanded = filename_expansion(word_splited);
+	ft_lstclear(&word_splited, &free);
 	if (filename_expanded == NULL)
 		return (NULL);
 	//verify len($ alone for example), len=0 => content=NULL
 	quote_removed = quote_removal(filename_expanded);
-	ft_lstclear(filename_expanded, &free);
+	ft_lstclear(&filename_expanded, &free);
 	return (quote_removed);
-*/
-	return (word_splited);
+	*/
 }

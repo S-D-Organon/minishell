@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:05:45 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 04:09:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/14 20:46:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ t_stream	*m_stream(void)
 }
 
 int	*m_exit_code(void)
+{
+	static int	exit_code = 0;
+	
+	return (&exit_code);
+}
+
+int	*m_last_exit_code(void)
 {
 	static int	exit_code = 0;
 	

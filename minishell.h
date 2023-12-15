@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/13 21:39:41 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/14 21:55:12 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int	is_builtin(char *cmd);
 const char	**operators_set(void);
 t_stream	*m_stream(void);
 int			*m_exit_code(void);
+int			*m_last_exit_code(void);
 
 //token print
 void	token_print(t_list *token);
@@ -128,5 +129,8 @@ char	*parameter_expansion(char *word, char **envp);
 
 //word split
 t_list *word_split(char *word);
+
+//filename expansion
+t_list	*filename_expansion(t_list *token);
 
 #endif
