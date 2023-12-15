@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 02:50:30 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 15:18:29 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ char	**cd_home(char **env, int i, char *pwd)
 	chdir(getenv("HOME"));
 	env[i] = ft_getcwd(env[i], pwd, "PWD=");
 	return (env);
+}
+
+char *ft_strjoincpy(char *s1, char *s2)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s1[i])
+		i++;
+	while (s2[j])
+	{
+		s1[i] = s2[j];
+		i++;
+		j++;
+	}
+	s1[i] = '\0';
+	return (s1);
 }
 
 char	**changeenvdir(char **env, int i, char *pwd)
