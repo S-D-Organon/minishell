@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 17:04:21 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:05:40 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_data
 int		ft_strcmp(char *s1, char *s2);
 int		ft_chr(char *str, char c);
 char	*ft_getcwd(char *env, char *pwd, char *choose);
+char	**changeenvdir(char **env, int i, char *pwd);
 //pwd_builtin.c
 int		pwd_builtin(char **arg, char ***env);
 //echo_builtin.c
