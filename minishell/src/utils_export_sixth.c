@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:46:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 15:47:11 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:04:13 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,15 @@ void	ft_equal(char **arg, char ***env)
 			}
 		}
 	}
+}
+
+{
+	while ((*env)[++*i])
+	{
+		sort[*i] = ft_strdup((*env)[*i]);
+		if (!sort[*i])
+			return (NULL);
+	}
+	sort[*i] = NULL;
+	return (sort);
 }

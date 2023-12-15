@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 16:11:19 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:04:21 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,13 @@ void	printexport(char ***env);
 int		ft_checkinput(char **arg);
 void	ft_equal(char **arg, char ***env);
 void	finalexport(char ***env);
+char	**ft_cpyenv(char ***env, char **sort, int *i);
 //utils_export_seventh
 char	**strplusenv(char *arg, char **env);
 int		ft_argnull(char **tmp, char **str, char **arg);
-int			verrifmalloctab(char **env, char *str);
+int		verrifmalloctab(char **env, char *str);
 int		verifmalloc(char *str, char *tmp);
+int		verifenv(char ***env, char **sort);
 //unset
 int		unset_builtin(char **arg, char ***env);
 char	**ft_realloc(char **env, int change);

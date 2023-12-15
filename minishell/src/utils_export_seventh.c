@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 16:10:07 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 16:10:08 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:03:37 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ int	ft_argnull(char **tmp, char **str, char **arg)
 	if (verifmalloc((*tmp), (*str)) == 1)
 		return (1);
 	free((*tmp));
+	return (0);
+}
+
+int	verifenv(char ***env, char **sort)
+{
+	if (!(*env))
+	{
+		freetab(sort);
+		return (1);
+	}
 	return (0);
 }
 

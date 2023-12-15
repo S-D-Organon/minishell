@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 16:59:33 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 17:03:56 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,28 +65,6 @@ int	changeenv(char ***env, char **arg, int *index)
 	return (0);
 }
 
-char	**ft_cpyenv(char ***env, char **sort, int *i)
-{
-	while ((*env)[++*i])
-	{
-		sort[*i] = ft_strdup((*env)[*i]);
-		if (!sort[*i])
-			return (NULL);
-	}
-	sort[*i] = NULL;
-	return (sort);
-}
-
-int	verifenv(char ***env, char **sort)
-{
-	if (!(*env))
-	{
-		freetab(sort);
-		return (1);
-	}
-	return (0);
-}
-
 int	changeexport(char ***env, char **tab)
 {
 	char	**sort;
@@ -116,6 +94,14 @@ int	changeexport(char ***env, char **tab)
 	return (0);
 }
 
+void	checkif(char **tab, char ***env, char **arg, int *index)
+{
+	if (inittab(&tab, (*env), arg, index) == 1 || checktab(&tab) == 1 || \
+	changeenv(env, arg, index) == 1 \
+	|| checkenvarg(env, arg, index) == 1 || changeexport(env, tab) == 1)
+		free(index);
+}
+
 int	export_builtin(char **arg, char ***env)
 {
 	int		*index;
@@ -138,10 +124,7 @@ int	export_builtin(char **arg, char ***env)
 	tab = malloc(sizeof(char *) * (len + 1));
 	if (!tab)
 		free(index);
-	if (inittab(&tab, (*env), arg, index) == 1 || checktab(&tab) == 1 || \
-	changeenv(env, arg, index) == 1 \
-	|| checkenvarg(env, arg, index) == 1 || changeexport(env, tab) == 1)
-		free(index);
+	checkif(tab, env, arg, index);
 	if (errno == ENOMEM)
 		return (1);
 	free(index);
