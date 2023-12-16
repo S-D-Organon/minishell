@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/15 00:33:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 06:10:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,9 @@ int	minishell_loop(char ***envp_ptr)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	(void)argv;
 	if (envp == NULL || argc != 1)
 		return (EXIT_FAILURE);
 	return (minishell_loop(&envp));
-	//filename_expansion(NULL);
+	//classic_expansion("main*.c", envp);
 }

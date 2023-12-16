@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 03:40:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 05:26:55 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 05:50:37 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ char	*next_mark(char *word)
 
 char	*next_quote(char *word, char previous_quote)
 {
+	if (previous_quote == '\0')
+	{
+		while (*word != '\0' && *word != '"' && *word != '\'')
+			word++;
+		return (word);
+	}
 	while (*word != '\0' && *word != previous_quote)
 		word++;
 	return (word);
@@ -35,7 +41,7 @@ char	*quote_purge(char *word)
 	if (word == NULL)
 		return (NULL);
 	word_cpy = word;
-	quote = next_quote(word, *quote);
+	quote = next_quote(word, '\0');
 	purge = ft_strdup("");
 	while (*word != '\0')
 	{
@@ -47,7 +53,7 @@ char	*quote_purge(char *word)
 		purge = str_merge(purge, ft_substr(word, 0, quote - word));
 		if (purge == NULL)
 			break ;
-		quote = next_quote(word, *quote);
+		quote = next_quote(word, '\0');
 		purge = str_merge(purge, ft_substr(word, 0, quote - word));
 	}
 	free(word_cpy);
@@ -71,12 +77,12 @@ char	*quote_remove(char *word)
 		unquoted_word = str_merge(unquoted_word, quote_purge(ft_substr(word, 0, separator - word)));
 		if (unquoted_word == NULL)
 			break ;
-		word = separator + (separator == '\x1D');
+		word = separator + (*separator == '\x1D');
 		separator = next_mark(word);
 		unquoted_word = str_merge(unquoted_word, ft_substr(word, 0, separator - word));
 		if (unquoted_word == NULL)
 			break ;
-		word = separator + (separator == '\x1D');
+		word = separator + (*separator == '\x1D');
 		separator = next_mark(word);
 	}
 	free(word_cpy);
