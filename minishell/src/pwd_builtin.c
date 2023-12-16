@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:45:56 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 15:03:33 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:32:34 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	pwd_builtin(char **arg, char ***env)
 	(void)env;
 	if (arg[0] != NULL)
 	{
-		printf("pwd: too many arguments\n");
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 		//*m_exit_code() = 1;
 		if (errno == ENOMEM)
 			return (1);

@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:47:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 15:22:41 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:34:43 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ft_else(char **arg, char ***env, int i, char *pwd)
 {
 	if (chdir(arg[0]) != 0)
 	{
-		printf("cd : no such file or directory : %s\n", arg[0]);
+		ft_putstr_fd("cd : no such file or directory\n", 2);
 		//*m_exit_code() = 1;
 	}
 	else

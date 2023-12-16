@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:22:00 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/06 21:47:21 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:32:15 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	exit_builtin(char **arg, char ***env)
 	(void)env;
 	if (arg[1] != NULL)
 	{
-		printf("too many arguments\n");
+		ft_putstr_fd("too many arguments\n", 2);
 		return ;
 	}
 	exit(0);

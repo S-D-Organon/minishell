@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 02:55:50 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 03:14:42 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:32:42 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_signalquit(int sig)
 	(void)sig;
 	kill(0, 0);
 	if (sig == SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", 1);
+		ft_putstr_fd("Quit (core dumped)\n", 2);
 	else if (sig == SIGINT)
 		write(1, "\n", 1);
 }

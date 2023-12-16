@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 15:22:32 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 16:35:14 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	cd_builtin(char **arg, char ***env)
 		(*env) = cd_home((*env), i, pwd);
 	else if (arg[1] != NULL)
 	{
-		printf("cd : too many arguments\n");
+		ft_putstr_fd("cd : too many arguments\n", 2);
 		//*m_exit_code() = 1;
 	}
 	else
