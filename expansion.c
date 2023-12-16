@@ -6,11 +6,28 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:36 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/15 00:58:53 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 05:28:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//add group separator(GS) to identify an expansion
+//strings between GS are protected from quote removal
+char	*expansion_mark(char *parameter)
+{
+	char	*parameter_protected;
+
+	if (ft_strlen(parameter) == 0)
+		return (parameter);
+	parameter_protected = str_merge(ft_strdup("\x1D"), parameter);
+	if (parameter_protected == NULL)
+		return (NULL);
+	parameter_protected = str_merge(parameter_protected, ft_strdup("\x1D"));
+	if (parameter_protected == NULL)
+		return (NULL);
+	return (parameter_protected);
+}
 
 void	ambiguous_redirection(char *token)
 {
@@ -68,12 +85,11 @@ t_list	*classic_expansion(char *word, char **envp)
 	if (word_splited == NULL)
 		return (NULL);
 	return (word_splited);
-	/*
 	filename_expanded = filename_expansion(word_splited);
 	ft_lstclear(&word_splited, &free);
 	if (filename_expanded == NULL)
 		return (NULL);
-	//verify len($ alone for example), len=0 => content=NULL
+	/*
 	quote_removed = quote_removal(filename_expanded);
 	ft_lstclear(&filename_expanded, &free);
 	return (quote_removed);

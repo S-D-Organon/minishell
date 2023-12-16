@@ -6,28 +6,11 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 04:04:28 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/15 00:55:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 03:11:30 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//add group separator(GS) to identify parameters in parameter expansion
-//strings between GS are protected from quote removal
-char	*quote_protection(char *parameter)
-{
-	char	*parameter_protected;
-
-	if (ft_strlen(parameter) == 0)
-		return (parameter);
-	parameter_protected = str_merge(ft_strdup("\x1D"), parameter);
-	if (parameter_protected == NULL)
-		return (NULL);
-	parameter_protected = str_merge(parameter_protected, ft_strdup("\x1D"));
-	if (parameter_protected == NULL)
-		return (NULL);
-	return (parameter_protected);
-}
 
 int	parameter_len(char *str)
 {
@@ -97,7 +80,7 @@ char	*parameter_expansion(char *word, char **envp)
 
 	parameter = next_parameter(word);
 	expansion = str_merge(ft_substr(word, 0, parameter - word), \
-	quote_protection(parameter_search(parameter, envp)));
+	expansion_mark(parameter_search(parameter, envp)));
 	if (expansion == NULL)
 		return (NULL);
 	position = parameter + parameter_len(parameter);
@@ -107,7 +90,7 @@ char	*parameter_expansion(char *word, char **envp)
 		expansion = str_merge(expansion, ft_substr(word, position - word, parameter - position));
 		if (expansion == NULL)
 			return (NULL);
-		expansion = str_merge(expansion, quote_protection(parameter_search(parameter, envp)));
+		expansion = str_merge(expansion, expansion_mark(parameter_search(parameter, envp)));
 		if (expansion == NULL)
 			return (NULL);
 		position = parameter + parameter_len(parameter);
