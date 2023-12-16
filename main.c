@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 18:47:45 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 23:14:02 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	minishell_loop(char ***envp_ptr)
 	t_list	*token;
 
 	input = readline(PROMPT);
+	token = NULL;
 	while (input != NULL)
 	{
 		add_history(input);
@@ -42,7 +43,6 @@ int	minishell_loop(char ***envp_ptr)
 	}
 	ft_lstclear(&token, &free);
 	rl_clear_history();
-	array_free(*envp_ptr, 2);
 	if (errno == ENOMEM)
 		*m_last_exit_code() = 1;
 	return (*m_last_exit_code());
@@ -50,8 +50,17 @@ int	minishell_loop(char ***envp_ptr)
 
 int	main(int argc, char *argv[], char *envp[])
 {
+	char	**envp_cpy;
+	int		exit_code;
+
 	(void)argv;
+	signal(SIGINT, &ft_signalnewline);
+	signal(SIGQUIT, &ft_signalquit);
 	if (envp == NULL || argc != 1)
 		return (EXIT_FAILURE);
-	return (minishell_loop(&envp));
+	envp_cpy = cpytab(envp);
+	exit_code = minishell_loop(&envp_cpy);
+	if (envp_cpy != NULL)
+		array_free(envp_cpy, 2);
+	return (exit_code);
 }

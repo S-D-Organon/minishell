@@ -5,120 +5,188 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 17:44:33 by gdornic          ###   ########.fr       */
+/*   Created: 2023/12/16 20:41:27 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/12/16 22:12:14 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include <../minishell.h>
 
-int	ifchangeenv(char ***env, char ****str, char **tmp, int *i)
+int    lentillequall(char *str)
 {
-	(*env)[i[0]] = ft_strjoin((*str)[i[1]][0], "=");
-	if (!(*env)[i[0]])
-	{
-		freetab3d((*str));
-		return (1);
-	}
-	(*tmp) = ft_strdup((*env)[i[0]]);
-	if (!(*tmp))
-	{
-		freetab3d((*str));
-		free((*env)[i[0]]);
-		return (1);
-	}
-	(*env)[i[0]] = ft_strjoin((*tmp), (*str)[i[1]][1]);
-	if (!(*env)[i[0]])
-	{
-		free((*tmp));
-		freetab3d((*str));
-		return (1);
-	}
-	free((*tmp));
-	(*tmp) = NULL;
-	return (0);
+    int    i;
+
+    i = 0;
+    while (str[i] && str[i] != '=')
+    {
+        i++;
+    }
+    if (str[i] == '\0')
+        return (-1);
+    return (i);
 }
 
-int	changeenv(char ***env, char **arg, int *index)
+int    ft_lentab(char **tab)
 {
-	char	***str;
-	int		i[2];
-	char	*tmp;
+    int    i;
 
-	i[0] = -1;
-	str = splitarg(arg, index);
-	if (!str)
+    i = 0;
+    while (tab[i])
+        i++;
+    return (i);
+}
+
+void    freetab(char **tab)
+{
+    int    i;
+
+    i = 0;
+    while (tab[i])
+    {
+        free(tab[i]);
+        i++;
+    }
+    free(tab);
+}
+
+int	check_syntax(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (!arg)
 		return (1);
-	while ((*env)[++i[0]])
+	if ((arg[0] < 'a' || arg[0] > 'z') && (arg[0] < 'A' || arg[0] > 'Z'))
 	{
-		i[1] = -1;
-		while (str[++i[1]])
+			ft_putstr_fd("minishell: export: '", 2);
+			ft_putstr_fd(arg, 1);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
+	}
+	while (arg[i])
+	{
+		if ((arg[i] < 'a' || arg[i] > 'z') && (arg[i] < 'A' || arg[i] > 'Z') && arg[i] < '0' && arg[i] > '9')
 		{
-			if (checksubstr(str[i[1]][0], (*env)[i[0]]) == 0)
-			{
-				if (ifchangeenv(env, &str, &tmp, i) == 1)
-					return (1);
-			}
+			ft_putstr_fd("minishell: export: '", 2);
+			ft_putstr_fd(arg, 1);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			return (1);
 		}
+		i++;
 	}
-	freetab3d(str);
 	return (0);
 }
 
-int	changeexport(char ***env, char **tab)
+int	checkarg(char **env, char *arg)
 {
-	char	**sort;
-	int		i;
-	int		j;
+	int	i;
 
-	i = -1;
-	j = -1;
-	sort = malloc(sizeof(char *) * (ft_lentab((*env)) + ft_lentab(tab) + 1));
-	if (!sort)
-		return (1);
-	sort = ft_cpyenv(env, sort, &i);
-	if (!sort)
-		return (1);
-	while (tab[++j])
+	i = 0;
+	while (env[i])
 	{
-		sort[i] = ft_strdup(tab[j]);
-		if (!sort[i])
+		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0 || ft_strncmp(env[i], arg, ft_strlen(env[i])) == 0)
 			return (1);
 		i++;
 	}
-	sort[i] = NULL;
-	(*env) = cpytab(sort);
-	if (verifenv(env, sort) == 1)
-		return (1);
-	freetab(sort);
 	return (0);
 }
 
-void	checkif(char **tab, char ***env, char **arg, int *index)
+char **ft_add_env(char **env, char *arg)
 {
-	if (inittab(&tab, (*env), arg, index) == 1 || checktab(&tab) == 1 || \
-	changeenv(env, arg, index) == 1 \
-	|| checkenvarg(env, arg, index) == 1 || changeexport(env, tab) == 1)
-		free(index);
+	int	len;
+	char **tmp;
+	int	i;
+
+	len = ft_lentab(env);
+	i = -1;
+	tmp = malloc(sizeof(char *) * (len + 2));
+	if (!tmp)
+		return (NULL);
+	while (env[++i])
+	{
+		tmp[i] = ft_strdup(env[i]);
+		if (!tmp[i])
+			return (NULL);
+	}
+	tmp[i] = ft_strdup(arg);
+	if (!tmp[i])
+		return (NULL);
+	tmp[i + 1] = NULL;
+	freetab(env);
+	return (tmp);
+}
+
+char **modify_env(char **env, char *arg)
+{
+	int	i;
+
+	i = - 1;
+	while (env[++i])
+	{
+		if (ft_strncmp(env[i], arg, lentillequall(arg)) == 0 && ft_chr(arg, '=') > 0)
+		{
+			free(env[i]);
+			env[i] = ft_strdup(arg);
+		}
+	}
+	return (env);
+}
+
+char	**cpytab(char **sort)
+{
+	int		i;
+	char	**new;
+
+	new = malloc(sizeof(char *) * (ft_lentab(sort) + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (sort[i])
+	{
+		new[i] = ft_strdup(sort[i]);
+		if (!new[i])
+			return (NULL);
+		i++;
+	}
+	new[i] = NULL;
+	return (new);
+}
+
+void	printexport(char ***env)
+{
+	int		i;
+	char	**sort;
+
+	i = 0;
+	//finalexport(env);
+	sort = cpytab((*env));
+	sort = sort_env(sort);
+	while (sort[i])
+	{
+		printf("declare x : %s\n", sort[i]);
+		i++;
+	}
+	free(sort);
 }
 
 int	export_builtin(char **arg, char ***env)
 {
-	int		*index;
-	char	**tab;
-	int		len;
+	int	i;
 
-	if (ft_printerror(arg, env) == 1)
+	i = -1;
+	if (!arg[0])
+		printexport(env);
+	else if (arg[0] && arg[0][0] == '-')
+	{
+		ft_putstr_fd("export don't take option\n", 2);
 		return (0);
-	ft_equal(arg, env);
-	len = ft_lentab(arg) - findindex(arg);
-	index = iskeywithout((*env), arg);
-	tab = malloc(sizeof(char *) * (len + 1));
-	if (!tab)
-		free(index);
-	checkif(tab, env, arg, index);
-	if (errno == ENOMEM)
-		return (1);
-	free(index);
+	}
+	while (arg[++i])
+	{
+		if (check_syntax(arg[i]) == 0 && checkarg((*env), arg[i]) == 0)
+			(*env) = ft_add_env((*env), arg[i]);
+		else if (check_syntax(arg[i]) == 0 && checkarg(*env, arg[i]) == 1)
+			(*env) = modify_env((*env), arg[i]);
+	}
 	return (0);
 }

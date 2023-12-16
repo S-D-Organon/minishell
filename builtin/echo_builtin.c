@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:22:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 17:44:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 22:30:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	echo_builtin(char **arg, char ***env)
 		}
 		printf("%s", arg[i]);
 		if (ft_strcmp(arg[0], "-n") == 0)
-			return (errno);
+			return (0);
 	}
 	printf("\n");
-	return (errno);
+	return (0);
 }

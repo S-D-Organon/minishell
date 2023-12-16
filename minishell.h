@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 17:48:11 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 22:41:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,5 +233,12 @@ char	*ft_reverse_split(char **tab);
 
 //sort_env
 char	**sort_env(char **env);
+
+//freetab int
+int	freetab_int(char **tab);
+
+//signal
+void	ft_signalnewline(int sig);
+void	ft_signalquit(int sig);
 
 #endif

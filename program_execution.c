@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/13 16:53:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 18:56:51 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ char	*path_search(char *cmd_name, char **path)
 		if (path_name == NULL)
 			break ;
 		if (is_executable(path_name))
+		{
+			array_free(path, 2);
 			return (path_name);
+		}
 		free(path_name);
 		i++;
 	}
@@ -90,8 +93,8 @@ int	program_execution(char **cmd, char **envp)
 	if (m_stream()->previous_output != -1 && close(m_stream()->previous_output))
 		return (0);
 	waitpid(pid, &wait_status, 0);
+	free(path_name);
 	if (WIFEXITED(wait_status))
 		return (0);
-	free(path_name);
 	return (1);
 }

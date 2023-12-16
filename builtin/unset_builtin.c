@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:33:59 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 17:44:33 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 22:31:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	unset_builtin(char **arg, char ***env)
 	if (arg[0][0] == '-')
 	{
 		ft_putstr_fd("minishell: unset does not take any option.\n", 2);
-		//*m_exit_code() = 1;
+		*m_exit_code() = 1;
 		if (errno == ENOMEM)
 			return (1);
 		return (0);

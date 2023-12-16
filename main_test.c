@@ -74,4 +74,7 @@ int	main(int argc, char *argv[], char **envp)
 		printf("%s\n", argv[i]);
 		i++;
 	}
+	while (1)
+	{
+	}
 }
