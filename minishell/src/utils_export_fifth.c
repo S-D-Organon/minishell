@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:41:40 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 15:43:11 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:24:17 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ int	ft_check_env(char **env, char *arg)
 	return (0);
 }
 
-char **cpytab(char **sort)
+char	**cpytab(char **sort)
 {
-	int	i;
-	char **new;
+	int		i;
+	char	**new;
 
 	new = malloc(sizeof(char *) * (ft_lentab(sort) + 1));
 	if (!new)

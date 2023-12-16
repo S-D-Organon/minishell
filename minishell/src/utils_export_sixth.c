@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:46:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 17:04:13 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/15 22:43:41 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	ft_equal(char **arg, char ***env)
 	}
 }
 
+char	**ft_cpyenv(char ***env, char **sort, int *i)
 {
 	while ((*env)[++*i])
 	{

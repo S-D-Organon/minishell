@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:30:41 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 15:33:12 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:21:58 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	lentillequall(char *str)
 int	checkcmp(char *str, char *str2)
 {
 	int	i;
-	int len1;
-	int len2;
+	int	len1;
+	int	len2;
 
 	i = 0;
 	len1 = lentillequall(str);

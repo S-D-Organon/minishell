@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:39:35 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 15:41:37 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:32:28 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int	checktab(char ***tab)
 
 char	***splitarg(char **arg, int *index)
 {
-	char ***split;
-	int	i;
-	int	k;
+	char	***split;
+	int		i;
+	int		k;
 
 	split = malloc(sizeof(char **) * (findindex(arg) + 1));
 	i = 0;
@@ -65,8 +65,8 @@ char	***splitarg(char **arg, int *index)
 
 char	***splitenv(char **env)
 {
-	char ***split;
-	int	i;
+	char	***split;
+	int		i;
 
 	split = malloc(sizeof(char **) * (ft_lentab(env) + 1));
 	i = 0;
@@ -81,7 +81,7 @@ char	***splitenv(char **env)
 
 int	checksubstr(char *s1, char *s2)
 {
-	int i;
+	int	i;
 	int	len;
 
 	len = ft_strlen(s1);

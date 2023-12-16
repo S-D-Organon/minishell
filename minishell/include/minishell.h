@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 11:50:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 17:05:40 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:35:04 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,15 @@ int		ft_strcmp(char *s1, char *s2);
 int		ft_chr(char *str, char c);
 char	*ft_getcwd(char *env, char *pwd, char *choose);
 char	**changeenvdir(char **env, int i, char *pwd);
+void	ft_else(char **arg, char ***env, int i, char *pwd);
 //pwd_builtin.c
 int		pwd_builtin(char **arg, char ***env);
 //echo_builtin.c
 int		echo_builtin(char **arg, char ***env);
 //cd_builtin.c
 int		cd_builtin(char **arg, char ***env);
+int		ft_findoldpwd(char **env);
+int		ft_findpwd(char **env);
 //env_builtin.c
 int		env_builtin(char **arg, char ***env);
 //exit_builtin.c
@@ -74,6 +77,7 @@ int		firstcharalpha(char *arg);
 int		ft_isalnumequal(char *str);
 int		ft_isalphatillequal(char *str);
 int		findindex(char **arg);
+int		ft_printerror(char **arg, char ***env);
 //utils_export_third
 int		checkenvarg(char ***env, char **arg, int *index);
 int		isinintpointer(int i, int *index, int size);

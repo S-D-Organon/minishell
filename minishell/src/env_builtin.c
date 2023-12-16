@@ -6,11 +6,12 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:36:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 01:53:19 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:20:48 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
 int	checkafterequal(char *str)
 {
 	int	i;
@@ -33,6 +34,7 @@ int	env_builtin(char **arg, char ***env)
 	if (arg[0] != NULL)
 	{
 		ft_printf("no args needed\n");
+		//*m_exit_code() = 1;
 		return (0);
 	}
 	while ((*env)[i])

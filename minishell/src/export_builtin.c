@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:56:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 17:03:56 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:34:09 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,8 @@ int	export_builtin(char **arg, char ***env)
 	char	**tab;
 	int		len;
 
-	if (ft_checkinput(arg) == 1)
-	{
-		printf("not a valid arg\n");
+	if (ft_printerror(arg, env) == 1)
 		return (0);
-	}
-	if (arg[0] == NULL)
-	{
-		printexport(env);
-		return (0);
-	}
 	ft_equal(arg, env);
 	len = ft_lentab(arg) - findindex(arg);
 	index = iskeywithout((*env), arg);

@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 23:59:52 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/14 02:44:18 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:21:44 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ char	**env_dup(char **newenv, char **env)
 
 char	**ft_sort(char **newenv)
 {
-	int	i;
-	int	j;
-	char *tmp;
+	int		i;
+	int		j;
+	char	*tmp;
 
 	i = 0;
 	j = i + 1;

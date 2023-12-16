@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 15:34:07 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 15:34:30 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:36:18 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,20 @@ int	findindex(char **arg)
 		i++;
 	}
 	return (j);
+}
+
+int	ft_printerror(char **arg, char ***env)
+{
+	if (ft_checkinput(arg) == 1)
+	{
+		printf("not a valid arg\n");
+		//*m_exit_code() = 1;
+		return (1);
+	}
+	if (arg[0] == NULL)
+	{
+		printexport(env);
+		return (1);
+	}
+	return (0);
 }

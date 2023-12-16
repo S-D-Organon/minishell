@@ -6,7 +6,7 @@
 /*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:47:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/15 17:05:26 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/16 15:22:41 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,21 @@ char	*ft_getcwd(char *env, char *pwd, char *choose)
 char	**changeenvdir(char **env, int i, char *pwd)
 {
 	i = ft_findoldpwd(env);
-	env[i] = ft_strjoin("OLDPWD=", env[ft_findpwd(env)] + 4);
+	if (env[i] && i != ft_lentab(env))
+		env[i] = ft_strjoin("OLDPWD=", env[ft_findpwd(env)] + 4);
 	i = ft_findpwd(env);
-	env[i] = ft_getcwd(env[i], pwd, "PWD=");
+	if (env[i] && i != ft_lentab(env))
+		env[i] = ft_getcwd(env[i], pwd, "PWD=");
 	return (env);
+}
+
+void	ft_else(char **arg, char ***env, int i, char *pwd)
+{
+	if (chdir(arg[0]) != 0)
+	{
+		printf("cd : no such file or directory : %s\n", arg[0]);
+		//*m_exit_code() = 1;
+	}
+	else
+		changeenvdir((*env), i, pwd);
 }
