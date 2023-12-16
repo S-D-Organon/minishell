@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 23:19:41 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 06:40:17 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 16:35:28 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ t_list	*filename_expansion(t_list *token)
 	expansion = NULL;
 	while (token != NULL)
 	{
-		new = wildcard_expansion(token->content, cwd_file);
+		if (*next_wildcard(token->content) == '\0')
+			new = lstnew_secure(ft_strdup(token->content));
+		else
+			new = wildcard_expansion(token->content, cwd_file);
 		if (new == NULL)
 			break ;
 		ft_lstadd_back(&expansion, new);

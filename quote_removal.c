@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 03:40:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 05:50:37 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 16:54:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*quote_purge(char *word)
 		purge = str_merge(purge, ft_substr(word, 0, quote - word));
 		if (purge == NULL)
 			break ;
+		word = quote + (*quote == '\'' || *quote == '"');
 		quote = next_quote(word, '\0');
 		purge = str_merge(purge, ft_substr(word, 0, quote - word));
 	}
@@ -87,4 +88,23 @@ char	*quote_remove(char *word)
 	}
 	free(word_cpy);
 	return (unquoted_word);
+}
+
+t_list	*quote_removal(t_list *token)
+{
+	t_list	*unquoted_token;
+	t_list	*new;
+
+	unquoted_token = NULL;
+	while (token != NULL)
+	{
+		new = lstnew_secure(quote_remove(ft_strdup(token->content)));
+		if (new == NULL)
+			break ;
+		ft_lstadd_back(&unquoted_token, new);
+		token = token->next;
+	}
+	if (errno == ENOMEM)
+		ft_lstclear(&unquoted_token, &free);
+	return (unquoted_token);
 }

@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 06:10:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 17:08:59 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,4 @@ int	main(int argc, char *argv[], char *envp[])
 	if (envp == NULL || argc != 1)
 		return (EXIT_FAILURE);
 	return (minishell_loop(&envp));
-	//classic_expansion("main*.c", envp);
 }
