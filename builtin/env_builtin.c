@@ -3,79 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 15:06:04 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/23 16:10:49 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/11/23 15:36:54 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/12/16 17:44:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "builtin.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include "../minishell.h"
 
-extern char	**environ;
-
-int	ft_strlen(char *str)
+int	checkafterequal(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != '=')
 		i++;
-	return (i);
+	if (str[i] == '=')
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
-{
-	char	*new_str;
-	int		i;
-	int		j;
-
-	if (!s1 || !s2)
-		return (0);
-	new_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (new_str == NULL)
-		return (0);
-	i = 0;
-	while (s1[i] != '\0')
-	{
-		new_str[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != '\0')
-	{
-		new_str[i] = s2[j];
-		i++;
-		j++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-
-void	env_builtin(void)
+int	env_builtin(char **arg, char ***env)
 {
 	int	i;
 
 	i = 0;
-	while (environ[i])
+	if (arg[0] != NULL)
 	{
-		printf("%s\n", environ[i]);
+		ft_putstr_fd("no args needed\n", 2);
+		//*m_exit_code() = 1;
+		return (0);
+	}
+	while ((*env)[i])
+	{
+		if (ft_chr((*env)[i], '=') > 0 && checkafterequal((*env)[i]) == 0)
+			printf("%s\n", (*env)[i]);
 		i++;
 	}
-}
-
-int	main(int ac, char **ag, char **env)
-{
-	char	*tut;
-
-	//environ = env;
-	tut = getenv("PWD");
-	//memcpy(tut, "test", 5);
-	//printf("%s\n", tut);
-	execve(ft_strjoin("/bin/", ag[1]), ag + 1, env);
-	//env_builtin();
+	return (0);
 }

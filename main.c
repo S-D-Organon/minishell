@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 17:08:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 18:47:45 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@ int	minishell_loop(char ***envp_ptr)
 			break ;
 		input = readline(PROMPT);
 	}
+	ft_lstclear(&token, &free);
+	rl_clear_history();
+	array_free(*envp_ptr, 2);
 	if (errno == ENOMEM)
 		*m_last_exit_code() = 1;
 	return (*m_last_exit_code());

@@ -3,105 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   cd_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lseiberr <lseiberr@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/21 15:16:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/10/23 16:20:38 by lseiberr         ###   ########.fr       */
+/*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
+/*   Updated: 2023/12/16 17:44:33 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin.h"
+#include "../minishell.h"
 
-int	cd_builtin(char *path)
-{
-	if (path[0] == '\0')
-	{
-		path = getenv("HOME");
-		if (path == NULL)
-			return (-1);
-	}
-	if (chdir(path) != 0)
-		return (-1);
-	return (0);
-}
-/*
-int	ft_strlen(char *str)
+int	ft_findoldpwd(char **env)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (env[i])
+	{
+		if (env[i][0] == 'O' && env[i][1] == 'L' && env[i][2] == 'D' \
+		&& env[i][3] == 'P' && env[i][4] == 'W' && env[i][5] == 'D')
+			break ;
 		i++;
+	}
 	return (i);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+int	ft_findpwd(char **env)
 {
-	char	*new_str;
-	int		i;
-	int		j;
+	int	i;
 
-	if (!s1 || !s2)
-		return (0);
-	new_str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (new_str == NULL)
-		return (0);
 	i = 0;
-	while (s1[i] != '\0')
+	while (env[i])
 	{
-		new_str[i] = s1[i];
+		if (env[i][0] == 'P' && env[i][1] == 'W' && env[i][2] == 'D')
+			break ;
 		i++;
 	}
+	return (i);
+}
+
+char	**cd_home(char **env, int i, char *pwd)
+{
+	static int	k;
+
+	i = ft_findoldpwd(env);
+	if (k > 0)
+		free(env[i]);
+	if (env[i] && i != ft_lentab(env))
+		env[i] = ft_getcwd(env[i], pwd, "OLDPWD=");
+	i = ft_findpwd(env);
+	chdir(getenv("HOME"));
+	if (k > 0)
+		free(env[i]);
+	if (env[i] && i != ft_lentab(env))
+		env[i] = ft_getcwd(env[i], pwd, "PWD=");
+	k++;
+	return (env);
+}
+
+char	*ft_strjoincpy(char *s1, char *s2)
+{
+	int	i;
+	int	j;
+
+	i = 0;
 	j = 0;
-	while (s2[j] != '\0')
+	while (s1[i])
+		i++;
+	while (s2[j])
 	{
-		new_str[i] = s2[j];
+		s1[i] = s2[j];
 		i++;
 		j++;
 	}
-	new_str[i] = '\0';
-	return (new_str);
+	s1[i] = '\0';
+	return (s1);
 }
 
-int	main(int argc, char *argv[])
+int	cd_builtin(char **arg, char ***env)
 {
-	char	current_directory[PATH_MAX];
-	char	*path;
-	int		status;
+	int		i;
+	char	pwd[PATH_MAX];
 
-	if (argc >= 2 && strcmp(argv[1], "cd") == 0)
+	i = 0;
+	if ((*env) == NULL)
+		return (0);
+	if (arg[0] == NULL || ft_strcmp(arg[0], "~") == 0)
+		(*env) = cd_home((*env), i, pwd);
+	else if (arg[1] != NULL)
 	{
-		if (getcwd(current_directory, PATH_MAX) != NULL)
-		{
-			printf("Répertoire courant : %s\n", current_directory);
-		}
-		else
-		{
-			perror("getcwd");
-		}
-		if (argc >= 3)
-		{
-			path = ft_strjoin(current_directory, "/");
-			path = ft_strjoin(path, argv[2]);
-			printf("Répertoire voulu : %s\n", path);
-			status = cd_builtin(path);
-			free(path);
-			if (status != 0)
-			{
-				return (1);
-			}
-		}
-		else
-		{
-			status = cd_builtin(NULL);
-			if (status != 0)
-			{
-				return (1);
-			}
-		}
-		status = open("test1", O_CREAT, 0777);
+		ft_putstr_fd("cd : too many arguments\n", 2);
+		//*m_exit_code() = 1;
 	}
+	else
+	{
+		if (ft_strcmp(arg[0], "-") == 0)
+			chdir((*env)[ft_findoldpwd((*env))] + 7);
+		else
+			ft_else(arg, env, i, pwd);
+	}
+	if (errno == ENOMEM)
+		return (1);
 	return (0);
 }
-*/
-

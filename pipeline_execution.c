@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 06:28:54 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 18:33:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int	pipeline_routine(t_list *pipeline, char ***envp_ptr, int exit_status, int bu
 	}
 	*m_exit_code() = 0;
 	exit_status = command_execution(command, envp_ptr, exit_status, builtin_create_subshell);
+	ft_lstclear(&command, &free);
 	if (exit_status == ENOMEM)
 		return (errno);
 	pipeline = next_pipe(pipeline);
