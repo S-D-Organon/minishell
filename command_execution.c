@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:18:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 05:06:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:57:16 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	command_execution(t_list *command, char ***envp_ptr, int exit_status, int bu
 	cmd = execve_command(command);
 	if (cmd == NULL)
 		return (errno);
-	if (m_stream_redirect(command))
+	if (m_stream_redirect(command) || *m_exit_code() == 130)
 	{
 		array_free(cmd, 2);
 		if (errno == ENOMEM)

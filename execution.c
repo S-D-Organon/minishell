@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/14 03:38:32 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:08:58 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	execution(t_list *token, char ***envp_ptr, int exit_status)
 		return (errno);
 	exit_status = pipeline_execution(pipeline, envp_ptr, 0);
 	ft_lstclear(&pipeline, &free);
+	if (*m_exit_code() == 130)
+		return (0);
 	if (errno == ENOMEM)
 		return (errno);
 	token = next_list_operator(token);

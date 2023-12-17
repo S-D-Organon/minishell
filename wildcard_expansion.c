@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 02:36:23 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 06:29:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:19:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_list	*wildcard_expansion(char *word, t_list *cwd_file)
 	pattern = pattern_extraction(word);
 	if (pattern == NULL)
 		return (NULL);
-	token_print(pattern);
 	expansion = NULL;
 	while (cwd_file != NULL)
 	{
@@ -96,6 +95,7 @@ t_list	*wildcard_expansion(char *word, t_list *cwd_file)
 		}
 		cwd_file = cwd_file->next;
 	}
+	ft_lstclear(&pattern, &free);
 	if (expansion == NULL)
 		return (lstnew_secure(ft_strdup(word)));
 	if (errno == ENOMEM)

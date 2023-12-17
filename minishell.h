@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 05:06:05 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:51:43 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,5 +242,6 @@ int	freetab_int(char **tab);
 void	ft_signalnewline(int sig);
 void	ft_signalquit(int sig);
 void	signal_do_nothing(int sig);
+void	signal_here_doc(int sig);
 
 #endif

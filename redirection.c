@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/11 18:38:49 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:11:31 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	here_doc_routine(char *delimiter, int pipe_fd[2])
 {
 	char	*input;
 
+	signal(SIGINT, &signal_here_doc);
+	rl_clear_history();
 	if (close(pipe_fd[0]))
 		return (0);
 	input = readline(HERE_DOC_PROMPT);
@@ -23,8 +25,11 @@ int	here_doc_routine(char *delimiter, int pipe_fd[2])
 	{
 		if (write(pipe_fd[1], input, ft_strlen(input)) == -1 || write(pipe_fd[1], "\n", 1) == -1)
 			return (0);
+		free(input);
 		input = readline(HERE_DOC_PROMPT);
 	}
+	if (input != NULL)
+		free(input);
 	return (0);
 }
 
@@ -44,10 +49,9 @@ int	here_doc(char *delimiter)
 	if (close(pipe_fd[1]))
 		return (errno);
 	waitpid(pid, &wait_status, 0);
-	if (!WIFEXITED(wait_status))
-		return (1);
-	if (WEXITSTATUS(wait_status))
-		return (1);
+	signal(SIGINT, &ft_signalnewline);
+	if (WIFEXITED(wait_status) && WEXITSTATUS(wait_status))
+		*m_exit_code() = 128 + WEXITSTATUS(wait_status);
 	m_stream()->input = pipe_fd[0];
 	return (0);
 }
