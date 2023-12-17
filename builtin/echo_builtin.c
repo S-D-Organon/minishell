@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:22:51 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:30:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 01:33:55 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ int	echo_builtin(char **arg, char ***env)
 	{
 		if (strcmp(arg[0], "-n") == 0)
 			i++;
-		while (arg[i + 1])
+		if (arg[i])
 		{
 			printf("%s", arg[i]);
-			printf(" ");
 			i++;
 		}
-		printf("%s", arg[i]);
+		while (arg[i])
+		{
+			printf(" ");
+			printf("%s", arg[i]);
+			i++;
+		}
 		if (ft_strcmp(arg[0], "-n") == 0)
 			return (0);
 	}

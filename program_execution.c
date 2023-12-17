@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 18:56:51 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 01:55:34 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ char	*path_search(char *cmd_name, char **path)
 	char	*path_name;
 	int		i;
 
-	if (path == NULL)
-		return (NULL);
 	if (is_executable(cmd_name))
 		return (ft_strdup(cmd_name));
 	i = 0;
@@ -50,15 +48,11 @@ char	*path_search(char *cmd_name, char **path)
 		if (path_name == NULL)
 			break ;
 		if (is_executable(path_name))
-		{
-			array_free(path, 2);
 			return (path_name);
-		}
 		free(path_name);
 		i++;
 	}
 	command_not_found(cmd_name);
-	array_free(path, 2);
 	return (NULL);
 }
 
@@ -71,18 +65,32 @@ int	program_routine(char *path_name, char **cmd, char **envp)
 	return (errno);
 }
 
+char	*path_name_init(char *cmd_name, char **envp)
+{
+	char	*path_name;
+	char	**split;
+
+	path_name = NULL;
+	if (cmd_name != NULL)
+	{
+		split = path_split(envp);
+		if (split == NULL)
+			return (NULL);
+		path_name = path_search(cmd_name, split);
+		array_free(split, 2);
+	}
+	return (path_name);
+}
+
 int	program_execution(char **cmd, char **envp)
 {
 	pid_t	pid;
 	char	*path_name;
 	int		wait_status;
 
-	if (cmd[0] != NULL)
-	{
-		path_name = path_search(cmd[0], path_split(envp));
-		if (path_name == NULL)
-			return (0);
-	}
+	path_name = path_name_init(cmd[0], envp);
+	if (path_name == NULL)
+		return (0);
 	pid = fork();
 	if (pid < 0)
 		return (0);
@@ -95,6 +103,10 @@ int	program_execution(char **cmd, char **envp)
 	waitpid(pid, &wait_status, 0);
 	free(path_name);
 	if (WIFEXITED(wait_status))
+	{
+		if (WEXITSTATUS(wait_status))
+			*m_exit_code() = 1;
 		return (0);
+	}
 	return (1);
 }
