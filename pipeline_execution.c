@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 18:33:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 02:58:41 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	remove_null_content(t_list **lst)
 	i = *lst;
 	while (i != NULL)
 	{
-		if (ft_strlen(i->content) == 0)
+		if (i->content == NULL || ft_strlen(i->content) == 0)
 			delete_node(lst, i);
 		i = i->next;
 	}

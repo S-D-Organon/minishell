@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 01:55:34 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 02:26:15 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int	program_execution(char **cmd, char **envp)
 	char	*path_name;
 	int		wait_status;
 
+	signal(SIGINT, &signal_do_nothing);
 	path_name = path_name_init(cmd[0], envp);
 	if (path_name == NULL)
 		return (0);
@@ -101,6 +102,7 @@ int	program_execution(char **cmd, char **envp)
 	if (m_stream()->previous_output != -1 && close(m_stream()->previous_output))
 		return (0);
 	waitpid(pid, &wait_status, 0);
+	signal(SIGINT, &ft_signalnewline);
 	free(path_name);
 	if (WIFEXITED(wait_status))
 	{
@@ -108,5 +110,6 @@ int	program_execution(char **cmd, char **envp)
 			*m_exit_code() = 1;
 		return (0);
 	}
-	return (1);
+	*m_exit_code() = 128 + SIGINT;
+	return (0);
 }

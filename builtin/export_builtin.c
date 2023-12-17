@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:41:27 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 23:57:03 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 03:24:04 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,17 +156,24 @@ void	printexport(char ***env)
 {
 	int		i;
 	char	**sort;
+	char	**split_tmp;
 
 	i = 0;
-	//finalexport(env);
-	sort = cpytab((*env));
-	sort = sort_env(sort);
+	sort = sort_env(*env);
 	while (sort[i])
 	{
-		printf("declare x : %s\n", sort[i]);
+		split_tmp = ft_split(sort[i], '=');
+		if (split_tmp == NULL)
+			break ;
+		printf("declare x ");
+		printf("%s", split_tmp[0]);
+		if (split_tmp[1] != NULL)
+			printf("=\"%s\"", split_tmp[1]);
+		printf("\n");
+		array_free(split_tmp, 2);
 		i++;
 	}
-	free(sort);
+	freetab(sort);
 }
 
 int	export_builtin(char **arg, char ***env)
