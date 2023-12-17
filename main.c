@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 23:14:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 00:56:24 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	minishell_loop(char ***envp_ptr)
 	char	*input;
 	t_list	*token;
 
-	input = readline(PROMPT);
 	token = NULL;
+	input = readline(PROMPT);
 	while (input != NULL)
 	{
 		add_history(input);
@@ -52,6 +52,7 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	char	**envp_cpy;
 	int		exit_code;
+	char	*str_test;
 
 	(void)argv;
 	signal(SIGINT, &ft_signalnewline);

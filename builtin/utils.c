@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 13:47:15 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:27:28 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 01:24:35 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	ft_chr(char *str, char c)
 	while (str[i])
 	{
 		if (str[i] == c)
-			return (i + 1);
+			return (0);
 		i++;
 	}
-	return (0);
+	return (1);
 }
 
 char	*ft_getcwd(char *env, char *pwd, char *choose)
@@ -49,12 +49,18 @@ char	**changeenvdir(char **env, int i, char *pwd)
 
 	i = ft_findoldpwd(env);
 	tmp = env[i];
-	if (env[i] && i != ft_lentab(env))
+	if (env[i] && i != ft_lentab(env) && ft_findpwd(env) != ft_lentab(env))
+	{
 		env[i] = ft_strjoin("OLDPWD=", env[ft_findpwd(env)] + 4);
-	free(tmp);
+		free(tmp);
+	}
 	i = ft_findpwd(env);
+	tmp = env[i];
 	if (env[i] && i != ft_lentab(env))
+	{
 		env[i] = ft_getcwd(env[i], pwd, "PWD=");
+		free(tmp);
+	}
 	return (env);
 }
 
@@ -63,7 +69,9 @@ void	ft_else(char **arg, char ***env, int i, char *pwd)
 	if (chdir(arg[0]) != 0)
 	{
 		ft_putstr_fd(ERROR_PREFIX, 2);
-		ft_putstr_fd("cd : no such file or directory\n", 2);
+		ft_putstr_fd("cd :", 2);
+		ft_putstr_fd(arg[0], 2);
+		ft_putendl_fd(": no such file or directory", 2);
 		*m_exit_code() = 1;
 	}
 	else

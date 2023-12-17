@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:49:42 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:25:42 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 00:22:56 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,23 @@ int	ft_findpwd(char **env)
 
 char	**cd_home(char **env, int i, char *pwd)
 {
-	static int	k;
+	char	*tmp;
 
 	i = ft_findoldpwd(env);
-	if (k > 0)
-		free(env[i]);
+	tmp = env[i];
 	if (env[i] && i != ft_lentab(env))
+	{
 		env[i] = ft_getcwd(env[i], pwd, "OLDPWD=");
+		free(tmp);
+	}
 	i = ft_findpwd(env);
 	chdir(getenv("HOME"));
-	if (k > 0)
-		free(env[i]);
+	tmp = env[i];
 	if (env[i] && i != ft_lentab(env))
+	{
 		env[i] = ft_getcwd(env[i], pwd, "PWD=");
-	k++;
+		free(tmp);
+	}
 	return (env);
 }
 

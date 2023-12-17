@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 15:36:54 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:30:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 00:50:36 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	env_builtin(char **arg, char ***env)
 	}
 	while ((*env)[i])
 	{
-		if (ft_chr((*env)[i], '=') > 0 && checkafterequal((*env)[i]) == 0)
+		if (ft_chr((*env)[i], '=') == 0 && checkafterequal((*env)[i]) == 0)
 			printf("%s\n", (*env)[i]);
 		i++;
 	}

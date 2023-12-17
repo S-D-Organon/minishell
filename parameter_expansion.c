@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 04:04:28 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 03:11:30 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 00:47:38 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ char	*next_parameter(char *word)
 char	*parameter_search(char *parameter, char **envp)
 {
 	char	*envp_parameter;
+	int		envp_parameter_len;
 	int		i;
 
 	if (*parameter == '\0')
@@ -69,7 +70,9 @@ char	*parameter_search(char *parameter, char **envp)
 		i++;
 	if (envp[i] == NULL)
 		return (ft_strdup(""));
-	return (ft_strdup(envp[i] + ft_strlen(envp_parameter)));
+	envp_parameter_len = ft_strlen(envp_parameter);
+	free(envp_parameter);
+	return (ft_strdup(envp[i] + envp_parameter_len));
 }
 
 char	*parameter_expansion(char *word, char **envp)

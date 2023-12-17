@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:41:27 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:12:14 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/16 23:57:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	checkarg(char **env, char *arg)
 	i = 0;
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0 || ft_strncmp(env[i], arg, ft_strlen(env[i])) == 0)
+		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0 || ft_strncmp(env[i], arg, ft_strlen(env[i])) == 0 || ft_strncmp(env[i], arg, lentillequall(arg)) == 0)
 			return (1);
 		i++;
 	}
@@ -123,7 +123,7 @@ char **modify_env(char **env, char *arg)
 	i = - 1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], arg, lentillequall(arg)) == 0 && ft_chr(arg, '=') > 0)
+		if (ft_strncmp(env[i], arg, lentillequall(arg)) == 0 && ft_chr(arg, '=') == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strdup(arg);
