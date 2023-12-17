@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:55:16 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:57:35 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 08:47:43 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	builtin_routine(char **cmd, char ***envp_ptr)
 		exit_status = env_builtin(cmd + 1, envp_ptr);
 	if (!ft_strncmp(cmd[0], "exit", -1))
 		exit_status = exit_builtin(cmd + 1, envp_ptr);
+	dup2(m_stream()->saved_stdin_fd, 0);
+	dup2(m_stream()->saved_stdout_fd, 1);
 	return (exit_status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:32:41 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 08:46:19 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,19 @@ t_list	*next_expanded_command(t_list *pipeline, char **envp)
 	return (command);
 }
 
-t_list	*next_pipe(t_list *pipeline)
+int	pipe_initialize(int builtin_create_subshell, t_list *pipeline)
 {
-	while (pipeline != NULL && !is_pipe(pipeline->content))
-		pipeline = pipeline->next;
-	return (pipeline);
+	if (builtin_create_subshell)
+	{
+		if (next_pipe(pipeline) == NULL)
+		{
+			if (pipe_set(1))
+				return (0);
+		}
+		else if (pipe_set(0))
+			return (0);
+	}
+	return (1);
 }
 
 int	pipeline_routine(t_list *pipeline, char ***envp_ptr, \
@@ -75,11 +83,8 @@ int exit_status, int builtin_create_subshell)
 	command = next_expanded_command(pipeline, *envp_ptr);
 	if (command == NULL)
 		return (errno);
-	if (builtin_create_subshell)
-	{
-		if (next_pipe(pipeline) == NULL && (pipe_set(1) || pipe_set(0)))
-			return (0);
-	}
+	if (pipe_initialize(builtin_create_subshell, pipeline) == 0)
+		return (0);
 	*m_exit_code() = 0;
 	exit_status = command_execution(command, \
 	envp_ptr, exit_status, builtin_create_subshell);

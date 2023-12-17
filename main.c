@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:33:50 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 08:48:36 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	minishell_loop(char ***envp_ptr)
 		token = tokenizer(input);
 		free(input);
 		*m_exit_code() = 0;
-		if (errno == ENOMEM || token != NULL && parser(token, envp_ptr))
+		if (errno == ENOMEM || (token != NULL && parser(token, envp_ptr)))
 			break ;
 		*m_last_exit_code() = *m_exit_code();
 		ft_lstclear(&token, &free);
@@ -50,7 +50,6 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	char	**envp_cpy;
 	int		exit_code;
-	char	*str_test;
 
 	(void)argv;
 	signal(SIGINT, &ft_signalnewline);

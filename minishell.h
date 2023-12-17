@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:41:08 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 08:46:48 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int					export_builtin(char **arg, char ***env);
 int					changeenv(char ***env, char **arg, int *index);
 char				**strplusenv(char *arg, char **env);
 int					changeexport(char ***env, char **tab);
+char				**cpytab(char **sort);
 
 //utils_export
 int					lentillequall(char *str);
@@ -215,5 +216,8 @@ int					quotes_rule(char *str);
 
 //next mark
 char				*next_mark(char *word);
+
+//next pipe
+t_list				*next_pipe(t_list *pipeline);
 
 #endif

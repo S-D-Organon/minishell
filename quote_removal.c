@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 03:40:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:39:13 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:42:59 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,6 @@ char	*quote_purge(char *word)
 	return (purge);
 }
 
-char	*quote_remove(char *word)
-{
-	char	*word_cpy;
-	char	*unquoted_word;
-
-	if (word == NULL)
-		return (NULL);
-	word_cpy = word;
-	unquoted_word = quote_remove_core(word);
-	free(word_cpy);
-	return (unquoted_word);
-}
-
 //use with dynamic allocation
 char	*quote_remove_core(char *word)
 {
@@ -90,6 +77,19 @@ char	*quote_remove_core(char *word)
 		word = separator + (*separator == '\x1D');
 		separator = next_mark(word);
 	}
+	return (unquoted_word);
+}
+
+char	*quote_remove(char *word)
+{
+	char	*word_cpy;
+	char	*unquoted_word;
+
+	if (word == NULL)
+		return (NULL);
+	word_cpy = word;
+	unquoted_word = quote_remove_core(word);
+	free(word_cpy);
 	return (unquoted_word);
 }
 
