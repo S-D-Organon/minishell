@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+         #
+#    By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/23 21:58:09 by gdornic           #+#    #+#              #
-#    Updated: 2023/12/17 00:54:35 by gdornic          ###   ########.fr        #
+#    Updated: 2023/12/17 07:07:19 by lseiberr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ HEADERS = -Ilibft
 
 LIB_LINK = -L/usr/include -lreadline -Llibft -lft
 
-BUILTIN_SRC = builtin/reverse_split.c builtin/sort_env.c builtin/utils.c builtin/pwd_builtin.c builtin/echo_builtin.c builtin/cd_builtin.c builtin/env_builtin.c builtin/exit_builtin.c builtin/export_builtin.c builtin/unset_builtin.c builtin/signals.c
+BUILTIN_SRC = builtin/reverse_split.c builtin/sort_env.c builtin/utils.c builtin/pwd_builtin.c builtin/echo_builtin.c builtin/cd_builtin.c builtin/env_builtin.c builtin/exit_builtin.c builtin/utils_export.c builtin/export_builtin.c builtin/unset_builtin.c builtin/signals.c
 
 SRC = $(BUILTIN_SRC) main.c array_free.c tokenizer.c definitions.c token_print.c function_variables.c parser.c syntax_rules.c execution.c pipeline_execution.c command_execution.c redirection.c builtin_execution.c program_execution.c expansion.c delete_node.c parameter_expansion.c str_merge.c stream.c word_split.c filename_expansion.c wildcard_expansion.c lstnew_secure.c quote_removal.c
 

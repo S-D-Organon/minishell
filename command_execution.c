@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:18:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 05:57:16 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:58:36 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char	**execve_command(t_list *command)
 	return (execve_command);
 }
 
-int	command_execution(t_list *command, char ***envp_ptr, int exit_status, int builtin_create_subshell)
+int	command_execution(t_list *command, char ***envp_ptr, \
+int exit_status, int builtin_create_subshell)
 {
 	char	**cmd;
 

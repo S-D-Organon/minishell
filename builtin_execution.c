@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 16:55:16 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 00:50:02 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:57:35 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	builtin_routine(char **cmd, char ***envp_ptr)
 	exit_status = 0;
 	if (m_stream_use())
 		return (0);
-	//printf("Waiting for Lucas...\n");
 	if (!ft_strncmp(cmd[0], "echo", -1))
 		exit_status = echo_builtin(cmd + 1, envp_ptr);
 	if (!ft_strncmp(cmd[0], "cd", -1))
@@ -52,7 +51,8 @@ int	builtin_execution(char **cmd, char ***envp_ptr, int builtin_create_subshell)
 	{
 		if (m_stream()->input != -1 && close(m_stream()->input))
 			return (0);
-		if (m_stream()->previous_output != -1 && close(m_stream()->previous_output))
+		if (m_stream()->previous_output != -1 && \
+		close(m_stream()->previous_output))
 			return (0);
 		waitpid(pid, &wait_status, 0);
 		if (WIFEXITED(wait_status))

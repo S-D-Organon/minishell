@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:11:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:50:01 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	here_doc_routine(char *delimiter, int pipe_fd[2])
 	input = readline(HERE_DOC_PROMPT);
 	while (input != NULL && ft_strncmp(delimiter, input, ft_strlen(input)))
 	{
-		if (write(pipe_fd[1], input, ft_strlen(input)) == -1 || write(pipe_fd[1], "\n", 1) == -1)
+		if (write(pipe_fd[1], input, ft_strlen(input)) == -1 || \
+		write(pipe_fd[1], "\n", 1) == -1)
 			return (0);
 		free(input);
 		input = readline(HERE_DOC_PROMPT);

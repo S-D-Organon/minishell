@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parameter_expansion.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 04:04:28 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 00:47:38 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:47:45 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ int	parameter_len(char *str)
 		len = 1;
 	while (str[len])
 	{
-		if (str[len] == '*' || str[len] == '$' || str[len] == '?' || str[len] == '"')
+		if (str[len] == '*' || str[len] == '$' || \
+		str[len] == '?' || str[len] == '"')
 			break ;
 		len++;
 	}
@@ -62,11 +63,13 @@ char	*parameter_search(char *parameter, char **envp)
 		return (ft_strdup(""));
 	if (*(parameter + 1) == '?')
 		return (ft_itoa(*m_last_exit_code()));
-	envp_parameter = str_merge(ft_substr(parameter, 1, parameter_len(parameter) - 1), ft_strdup("="));
+	envp_parameter = str_merge(\
+	ft_substr(parameter, 1, parameter_len(parameter) - 1), ft_strdup("="));
 	if (envp_parameter == NULL)
 		return (NULL);
 	i = 0;
-	while (envp[i] != NULL && ft_strncmp(envp[i], envp_parameter, ft_strlen(envp_parameter)))
+	while (envp[i] != NULL && \
+	ft_strncmp(envp[i], envp_parameter, ft_strlen(envp_parameter)))
 		i++;
 	if (envp[i] == NULL)
 		return (ft_strdup(""));
@@ -90,10 +93,12 @@ char	*parameter_expansion(char *word, char **envp)
 	while (*position != '\0')
 	{
 		parameter = next_parameter(position);
-		expansion = str_merge(expansion, ft_substr(word, position - word, parameter - position));
+		expansion = str_merge(expansion, \
+		ft_substr(word, position - word, parameter - position));
 		if (expansion == NULL)
 			return (NULL);
-		expansion = str_merge(expansion, expansion_mark(parameter_search(parameter, envp)));
+		expansion = str_merge(expansion, \
+		expansion_mark(parameter_search(parameter, envp)));
 		if (expansion == NULL)
 			return (NULL);
 		position = parameter + parameter_len(parameter);

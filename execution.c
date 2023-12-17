@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:08:58 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:48:33 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_list	*and_skip(t_list *token)
 	return (token);
 }
 
-t_list *or_skip(t_list *token)
+t_list	*or_skip(t_list *token)
 {
 	while (token != NULL && is_or(token->content))
 		token = skip_group(token);
@@ -62,7 +62,8 @@ t_list	*next_pipeline(t_list *token)
 	pipeline = NULL;
 	while (is_bracket(token->content) || is_list_operator(token->content))
 		token = token->next;
-	while (token != NULL && !is_list_operator(token->content) && !is_bracket(token->content))
+	while (token != NULL && !is_list_operator(token->content) && \
+	!is_bracket(token->content))
 	{
 		content = ft_strdup(token->content);
 		if (content == NULL)

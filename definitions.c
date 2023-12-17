@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   definitions.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 20:27:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/10 06:38:23 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:52:41 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	is_operator(char *str)
 	i = 0;
 	while (operators_set()[i])
 	{
-		if (ft_strncmp(operators_set()[i], str, ft_strlen(operators_set()[i])) == 0)
+		if (ft_strncmp(operators_set()[i], str, \
+		ft_strlen(operators_set()[i])) == 0)
 			return (1);
 		i++;
 	}
@@ -52,7 +53,8 @@ int	is_redirection_operator(char *str)
 	i = 0;
 	while (i < 4)
 	{
-		if (ft_strncmp(operators_set()[i], str, ft_strlen(operators_set()[i])) == 0)
+		if (ft_strncmp(operators_set()[i], str, \
+		ft_strlen(operators_set()[i])) == 0)
 			return (1);
 		i++;
 	}
@@ -68,7 +70,8 @@ int	is_control_operator(char *str)
 	i = 4;
 	while (i < 7)
 	{
-		if (ft_strncmp(operators_set()[i], str, ft_strlen(operators_set()[i])) == 0)
+		if (ft_strncmp(operators_set()[i], str, \
+		ft_strlen(operators_set()[i])) == 0)
 			return (1);
 		i++;
 	}
@@ -84,7 +87,8 @@ int	is_list_operator(char *str)
 	i = 5;
 	while (i < 7)
 	{
-		if (ft_strncmp(operators_set()[i], str, ft_strlen(operators_set()[i])) == 0)
+		if (ft_strncmp(operators_set()[i], str, \
+		ft_strlen(operators_set()[i])) == 0)
 			return (1);
 		i++;
 	}

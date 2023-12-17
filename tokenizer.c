@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 13:36:56 by gdornic           #+#    #+#             */
-/*   Updated: 2023/11/29 22:58:59 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:53:34 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ const char	*find_operator(char *str)
 	while (operators_set()[i])
 	{
 		operator_len = ft_strlen(operators_set()[i]);
-		if (operator_len > longest_operator_len && ft_strncmp(operators_set()[i], str, operator_len) == 0)
+		if (operator_len > longest_operator_len && \
+		ft_strncmp(operators_set()[i], str, operator_len) == 0)
 		{
 			longest_operator = operators_set()[i];
 			longest_operator_len = operator_len;

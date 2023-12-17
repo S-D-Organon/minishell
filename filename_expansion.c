@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   filename_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 23:19:41 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/16 16:35:28 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:58:12 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

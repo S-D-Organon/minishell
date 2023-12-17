@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wildcard_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 02:36:23 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:19:56 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:56:57 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

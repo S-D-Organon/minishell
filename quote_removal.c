@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_removal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 03:40:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 01:02:55 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 06:59:09 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,14 @@ char	*quote_remove(char *word)
 	separator = next_mark(word);
 	while (*word != '\0')
 	{
-		unquoted_word = str_merge(unquoted_word, quote_purge(ft_substr(word, 0, separator - word)));
+		unquoted_word = str_merge(unquoted_word, \
+		quote_purge(ft_substr(word, 0, separator - word)));
 		if (unquoted_word == NULL)
 			break ;
 		word = separator + (*separator == '\x1D');
 		separator = next_mark(word);
-		unquoted_word = str_merge(unquoted_word, ft_substr(word, 0, separator - word));
+		unquoted_word = str_merge(unquoted_word, \
+		ft_substr(word, 0, separator - word));
 		if (unquoted_word == NULL)
 			break ;
 		word = separator + (*separator == '\x1D');
