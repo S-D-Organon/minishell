@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:10:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:50:01 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:40:54 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int	output_redirect(char *file_name)
 {
 	int	fd;
 
-	fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, O_CREAT_PERMISSIONS);
+	fd = open(file_name, O_CREAT | O_WRONLY | O_TRUNC, \
+	S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
 	{
 		*m_exit_code() = 1;
@@ -97,7 +98,8 @@ int	output_redirect_append(char *file_name)
 {
 	int	fd;
 
-	fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, O_CREAT_PERMISSIONS);
+	fd = open(file_name, O_CREAT | O_WRONLY | O_APPEND, \
+	S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (fd < 0)
 	{
 		*m_exit_code() = 1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
+/*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 05:03:08 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 07:33:50 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	minishell_loop(char ***envp_ptr)
 		errno = 0;
 		token = tokenizer(input);
 		free(input);
-		if (errno == ENOMEM)
-			break ;
 		*m_exit_code() = 0;
-		if (token != NULL && parser(token, envp_ptr))
+		if (errno == ENOMEM || token != NULL && parser(token, envp_ptr))
 			break ;
 		*m_last_exit_code() = *m_exit_code();
 		ft_lstclear(&token, &free);

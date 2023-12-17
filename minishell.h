@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:07:54 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:41:08 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 # include <libft.h>
 # define ERROR_PREFIX "minishell: "
 # define PROMPT "minishell> "
-# define O_CREAT_PERMISSIONS (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH)
 # define HERE_DOC_PROMPT "> "
 
 typedef struct s_stream
@@ -204,5 +203,17 @@ void				ft_signalnewline(int sig);
 void				ft_signalquit(int sig);
 void				signal_do_nothing(int sig);
 void				signal_here_doc(int sig);
+
+//path split
+char				**path_split(char **envp);
+
+//next list operator
+t_list				*next_list_operator(t_list *token);
+
+//quote rule
+int					quotes_rule(char *str);
+
+//next mark
+char				*next_mark(char *word);
 
 #endif

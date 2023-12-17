@@ -6,7 +6,7 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:54:57 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:32:41 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,7 @@ int exit_status, int builtin_create_subshell)
 		return (errno);
 	if (builtin_create_subshell)
 	{
-		if (next_pipe(pipeline) == NULL)
-		{
-			if (pipe_set(1))
-				return (0);
-		}
-		else if (pipe_set(0))
+		if (next_pipe(pipeline) == NULL && (pipe_set(1) || pipe_set(0)))
 			return (0);
 	}
 	*m_exit_code() = 0;

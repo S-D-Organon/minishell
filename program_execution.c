@@ -6,25 +6,11 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:21:30 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 07:00:45 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:23:12 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**path_split(char **envp)
-{
-	char	*path_value;
-	int		i;
-
-	i = 0;
-	while (envp[i] != NULL && ft_strncmp(envp[i], "PATH=", ft_strlen("PATH=")))
-		i++;
-	if (envp[i] == NULL)
-		return (NULL);
-	path_value = envp[i] + ft_strlen("PATH=");
-	return (ft_split(path_value, ':'));
-}
 
 void	command_not_found(char *cmd_name)
 {
@@ -102,12 +88,8 @@ int	program_execution(char **cmd, char **envp)
 		return (0);
 	waitpid(pid, &wait_status, 0);
 	free(path_name);
-	if (WIFEXITED(wait_status))
-	{
-		if (WEXITSTATUS(wait_status))
-			*m_exit_code() = 1;
-		return (0);
-	}
+	if (WIFEXITED(wait_status) && WEXITSTATUS(wait_status))
+		*m_exit_code() = 1;
 	if (WIFSIGNALED(wait_status))
 		*m_exit_code() = 128 + WTERMSIG(wait_status);
 	return (0);

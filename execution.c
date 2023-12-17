@@ -6,18 +6,11 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 20:41:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:48:33 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:24:02 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_list	*next_list_operator(t_list *token)
-{
-	while (token != NULL && !is_list_operator(token->content))
-		token = token->next;
-	return (token);
-}
 
 t_list	*skip_group(t_list *token)
 {

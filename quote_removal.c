@@ -6,18 +6,11 @@
 /*   By: lseiberr <marvin@42perpignan.fr>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 03:40:13 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 06:59:09 by lseiberr         ###   ########.fr       */
+/*   Updated: 2023/12/17 07:39:13 by lseiberr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*next_mark(char *word)
-{
-	while (*word != '\0' && *word != '\x1D')
-		word++;
-	return (word);
-}
 
 char	*next_quote(char *word, char previous_quote)
 {
@@ -61,16 +54,25 @@ char	*quote_purge(char *word)
 	return (purge);
 }
 
-//use with dynamic allocation
 char	*quote_remove(char *word)
 {
-	char	*unquoted_word;
 	char	*word_cpy;
-	char	*separator;
+	char	*unquoted_word;
 
 	if (word == NULL)
 		return (NULL);
 	word_cpy = word;
+	unquoted_word = quote_remove_core(word);
+	free(word_cpy);
+	return (unquoted_word);
+}
+
+//use with dynamic allocation
+char	*quote_remove_core(char *word)
+{
+	char	*unquoted_word;
+	char	*separator;
+
 	unquoted_word = ft_strdup("");
 	separator = next_mark(word);
 	while (*word != '\0')
@@ -88,7 +90,6 @@ char	*quote_remove(char *word)
 		word = separator + (*separator == '\x1D');
 		separator = next_mark(word);
 	}
-	free(word_cpy);
 	return (unquoted_word);
 }
 
