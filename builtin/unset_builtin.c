@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 14:33:59 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/16 22:31:28 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:18:26 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	**ft_realloc(char **env, int change)
 	{
 		if (i != change)
 		{
-			temp[j] = env[i];
+			temp[j] = ft_strdup(env[i]);
 			j++;
 		}
 		i++;
@@ -71,12 +71,16 @@ char	**ft_realloc(char **env, int change)
 
 int	ft_while(char **arg, char ***env, int j, int *i)
 {
+	char	**env_cpy;
+
 	j = -1;
 	while ((*env)[++j])
 	{
 		if (ft_checkexist(arg[*i], (*env)[j]) == 1)
 		{
+			env_cpy = *env;
 			*env = ft_realloc(*env, j);
+			freetab(env_cpy);
 			if (!(*env))
 				return (1);
 			break ;
