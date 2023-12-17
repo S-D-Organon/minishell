@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 20:41:27 by lseiberr          #+#    #+#             */
-/*   Updated: 2023/12/17 03:24:04 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 04:48:01 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int    lentillequall(char *str)
     {
         i++;
     }
-    if (str[i] == '\0')
-        return (-1);
     return (i);
 }
 
@@ -80,14 +78,28 @@ int	check_syntax(char *arg)
 int	checkarg(char **env, char *arg)
 {
 	int	i;
+	char	**split_env;
+	char	**split_arg;
 
 	i = 0;
+	split_arg = ft_split(arg, '=');
+	if (split_arg == NULL)
+		return (0);
 	while (env[i])
 	{
-		if (ft_strncmp(env[i], arg, ft_strlen(arg)) == 0 || ft_strncmp(env[i], arg, ft_strlen(env[i])) == 0 || ft_strncmp(env[i], arg, lentillequall(arg)) == 0)
+		split_env = ft_split(env[i], '=');
+		if (split_env == NULL)
+			break ;
+		if (ft_strcmp(split_arg[0], split_env[0]) == 0 && ft_chr(arg, '=') == 0)
+		{
+			freetab(split_arg);
+			freetab(split_env);
 			return (1);
+		}
+		freetab(split_env);
 		i++;
 	}
+	freetab(split_arg);
 	return (0);
 }
 
@@ -123,7 +135,7 @@ char **modify_env(char **env, char *arg)
 	i = - 1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], arg, lentillequall(arg)) == 0 && ft_chr(arg, '=') == 0)
+		if (lentillequall(arg) == lentillequall(env[i]) && ft_strncmp(env[i], arg, lentillequall(arg)) == 0 && ft_chr(arg, '=') == 0)
 		{
 			free(env[i]);
 			env[i] = ft_strdup(arg);

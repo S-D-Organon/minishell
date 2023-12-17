@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 12:05:45 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/14 20:46:35 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:08:00 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,19 @@ int	*m_last_exit_code(void)
 	static int	exit_code = 0;
 	
 	return (&exit_code);
+}
+
+struct sigaction *m_sa(void)
+{
+	static struct sigaction	sa;
+	static int	first_call;
+
+	if (!first_call)
+	{
+		ft_memset(&sa, 0, sizeof(struct sigaction));
+		sa.sa_handler = SIG_IGN;
+		sa.sa_flags = 0;
+		first_call = 1;
+	}
+	return (&sa);
 }

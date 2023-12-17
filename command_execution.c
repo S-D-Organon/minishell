@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 15:18:06 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 03:31:12 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:06:49 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	command_execution(t_list *command, char ***envp_ptr, int exit_status, int bu
 	else
 		exit_status = program_execution(cmd, *envp_ptr);
 	signal(SIGINT, &ft_signalnewline);
-	signal(SIGQUIT, &ft_signalquit);
+	sigaction(SIGQUIT, m_sa(), NULL);
 	array_free(cmd, 2);
 	return (exit_status);
 }

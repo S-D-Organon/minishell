@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 22:44:33 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 03:49:31 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 03:51:03 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ t_list	*next_expanded_command(t_list *pipeline, char **envp)
 		ft_lstadd_back(&command, new);
 		pipeline = pipeline->next;
 	}
-	token_print(command);
 	remove_null_content(&command);
 	return (command);
 }

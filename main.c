@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:33:52 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 00:56:24 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:03:08 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 	(void)argv;
 	signal(SIGINT, &ft_signalnewline);
-	signal(SIGQUIT, &ft_signalquit);
+	sigaction(SIGQUIT, m_sa(), NULL);
 	if (envp == NULL || argc != 1)
 		return (EXIT_FAILURE);
 	envp_cpy = cpytab(envp);

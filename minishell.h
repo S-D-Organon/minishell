@@ -6,7 +6,7 @@
 /*   By: gdornic <gdornic@student.42perpignan.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 11:34:29 by gdornic           #+#    #+#             */
-/*   Updated: 2023/12/17 02:19:10 by gdornic          ###   ########.fr       */
+/*   Updated: 2023/12/17 05:06:05 by gdornic          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ const char	**operators_set(void);
 t_stream	*m_stream(void);
 int			*m_exit_code(void);
 int			*m_last_exit_code(void);
+struct sigaction *m_sa(void);
 
 //token print
 void	token_print(t_list *token);
